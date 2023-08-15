@@ -15,6 +15,7 @@ import Login from './pages/Login';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import Cart from './pages/Cart';
+import './App.css';
 
 function App() {
   const location = useLocation();
@@ -22,7 +23,8 @@ function App() {
   return (
     <>
       <Header login={login} />
-      <div className='content'>
+
+      <div className='main'>
         <Routes location={location} key={location.pathname}>
           <Route path='/' element={<Main />}></Route>
           <Route path='/login' element={<Login />}></Route>
@@ -37,6 +39,7 @@ function App() {
           <Route path='*' element={<NotFound />}></Route>
         </Routes>
       </div>
+
       <Footer />
     </>
   );
