@@ -1,0 +1,86 @@
+@import '../../../scss/vars';
+
+.projects {
+  padding: 88px 0 200px;
+  background: $main-clr;
+
+  &__title {
+    text-align: center;
+    font-size: 38px;
+    color: $text-wh-clr;
+    text-transform: uppercase;
+    font-weight: 600;
+
+    &__span {
+      color: $dop-clr;
+    }
+  }
+
+  &__linkMore {
+    color: $text-wh-clr;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-align: center;
+    font-weight: 600;
+    margin-top: 20px;
+    font-size: 17px;
+
+    a {
+      color: $text-wh-clr;
+    }
+  }
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  margin-top: 40px;
+  box-shadow: 0px 7px 20px 0px #00000073;
+
+  &__slide {
+    width: 25vw;
+    min-height: 888px;
+
+    &__overlay {
+      width: 100%;
+      min-height: 888px;
+      background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный цвет */
+      pointer-events: none; /* Чтобы overlay не мешал взаимодействию с содержимым блока */
+    }
+
+    &__title {
+      color: $text-wh-clr;
+      font-size: 28px;
+      line-height: 40px;
+      font-weight: 500;
+      text-transform: uppercase;
+      padding: 0 24px;
+      padding-top: 48px;
+    }
+  }
+}
+
+.slickPrev,
+.slickNext {
+  position: absolute;
+  top: 50%;
+  background: transparent;
+  border: none;
+  z-index: 2;
+  font-size: 50px;
+  color: #ebebeb;
+
+  &:hover {
+    transition: all 0.5s ease;
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+}
+
+.slickPrev {
+  left: 30px;
+}
+
+.slickNext {
+  right: 30px;
+}
