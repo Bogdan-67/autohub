@@ -15,12 +15,7 @@ const Header = (login) => {
   const location = useLocation();
   const item = 3;
   const [isOpen, setIsOpen] = useState(false);
-  console.log('login', login.login);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-  console.log(isOpen);
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
@@ -34,18 +29,17 @@ const Header = (login) => {
             to='/catalog'
             className={classNames(
               styles.item,
-              location.pathname == '/catalog' ? styles.active : '',
+              location.pathname === '/catalog' ? styles.active : '',
             )}>
             Каталог
           </NavLink>
-          <button className={styles.menu__button} onClick={toggleMenu}>
-            ;D
-          </button>
-          <ul className={classNames(styles.menu_items, isOpen ? styles.open : '')}>
-            <li>Звуковое обородувание</li>
-            <li>Микрофоны</li>
-            <li>Свет</li>
-          </ul>
+          {isOpen && (
+            <ul className={classNames(styles.menu_items, isOpen ? styles.open : '')}>
+              <li>Звуковое обородувание</li>
+              <li>Микрофоны</li>
+              <li>Свет</li>
+            </ul>
+          )}
         </li>
         {menuItems.map((item) => (
           <li key={item.id}>
@@ -53,7 +47,7 @@ const Header = (login) => {
               to={item.path}
               className={classNames(
                 styles.item,
-                location.pathname == item.path ? styles.active : '',
+                location.pathname === item.path ? styles.active : '',
               )}>
               {item.title}
             </NavLink>
@@ -62,20 +56,20 @@ const Header = (login) => {
       </ul>
       <div className={styles.box}>
         <div className={classNames(styles.search, styles.box__item)}>Поиск</div>
-        {login.login ? (
+        {login ? (
           <div className={classNames(styles.login, styles.box__item)}>
             <Link to='/login'>Войти</Link>
           </div>
         ) : (
           <div className={classNames(styles.item, styles.profile, styles.box__item)}>
-            <Link className={location.pathname == '/profile' ? styles.active : ''} to='/profile'>
+            <Link className={location.pathname === '/profile' ? styles.active : ''} to='/profile'>
               Профиль
             </Link>
           </div>
         )}
         <div className={classNames(styles.cart, styles.box__item)}>
           <div className={styles.item}>
-            <Link className={location.pathname == '/cart' ? styles.active : ''} to='/cart'>
+            <Link className={location.pathname === '/cart' ? styles.active : ''} to='/cart'>
               Корзина
             </Link>
           </div>
