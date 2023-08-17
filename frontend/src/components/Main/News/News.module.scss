@@ -1,0 +1,129 @@
+@import '../../../scss/vars';
+
+.news {
+  position: relative;
+  padding: 88px 0 200px;
+
+  &__title {
+    text-align: center;
+    font-size: 38px;
+    color: inherit;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  &__linkMore {
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-align: center;
+    font-weight: 600;
+    margin-top: 20px;
+    font-size: 17px;
+  }
+
+  &__content {
+    margin-top: 40px;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+  }
+
+  &__article {
+    position: relative;
+    width: 403px;
+    height: 403px;
+    display: flex;
+    align-items: end;
+    overflow: hidden;
+
+    &__overlay {
+      position: absolute;
+      left: 0;
+      top: 221px;
+      background: #1e2530bd;
+      color: $text-wh-clr;
+      height: 100%;
+      transition: all 0.5s ease;
+      padding: 28px;
+      padding-right: 14px;
+    }
+
+    &__date {
+      font-weight: 600;
+      font-size: 17px;
+      padding-bottom: 15px;
+      display: block;
+    }
+
+    &__title {
+      max-width: 100%;
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 29px;
+      height: 90px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &__text,
+    &__endword {
+      max-width: 100%;
+      width: 100%;
+      font-weight: 400;
+      line-height: 29px;
+      margin-top: 15px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &__button {
+      width: 150px;
+      margin: auto;
+      margin-top: 20px;
+      text-align: center;
+      border: 2px solid $text-wh-clr;
+      text-transform: uppercase;
+      font-size: 17px;
+      font-weight: 600;
+      padding: 11px 11px 13px 11px;
+      transition: all 0.5s ease;
+
+      &:hover {
+        color: $main-clr;
+        background: $text-wh-clr;
+      }
+    }
+
+    &__text {
+      height: 116px;
+    }
+
+    &:hover &__overlay {
+      top: 0;
+    }
+
+    &:hover &__date {
+      display: none;
+    }
+
+    &:hover &__text,
+    &:hover &__endword,
+    &:hover &__button {
+      display: block;
+    }
+
+    &__date,
+    &__title,
+    &__text,
+    &__endword,
+    &__button {
+      color: inherit;
+    }
+
+    &__text,
+    &__endword,
+    &__button {
+      display: none;
+    }
+  }
+}
