@@ -1,0 +1,98 @@
+@import '../../../scss/vars';
+
+.videos {
+  padding: 170px 0;
+  background: $main-clr;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: $text-wh-clr;
+
+  &__content {
+    width: 386px;
+    margin-left: 40px;
+
+    &__title {
+      color: inherit;
+      font-size: 38px;
+      font-weight: 600;
+      line-height: 39px;
+    }
+
+    &__text {
+      color: inherit;
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 36px;
+      text-transform: uppercase;
+      margin-top: 20px;
+    }
+
+    &__link {
+      display: inline-block;
+      color: inherit;
+      border: 2px solid $text-wh-clr;
+      font-size: 17px;
+      text-transform: uppercase;
+      line-height: 49px;
+      font-weight: 600;
+      padding: 0 13px;
+      margin-top: 30px;
+      transition: all 0.5s ease;
+
+      &:hover {
+        background: $text-wh-clr;
+        color: $main-clr;
+      }
+    }
+  }
+}
+
+.carousel {
+  position: relative;
+  width: 1219px;
+  height: 700px;
+  margin-right: 130px;
+
+  &__slide {
+    width: 1219px;
+    height: 700px;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 1177px;
+      height: 662px;
+      top: 40px;
+      left: 40px;
+      background: #263040;
+      z-index: -1;
+    }
+  }
+}
+
+.slickPrev,
+.slickNext {
+  position: absolute;
+  top: 50%;
+  background: transparent;
+  border: none;
+  z-index: 2;
+  font-size: 50px;
+  color: #ebebeb;
+
+  &:hover {
+    transition: all 0.5s ease;
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+}
+
+.slickPrev {
+  left: -80px;
+}
+
+.slickNext {
+  right: -80px;
+}

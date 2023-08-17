@@ -1,0 +1,33 @@
+.slickDots {
+  color: #fff;
+  display: flex !important;
+  position: absolute;
+  top: 730px;
+  left: 50%;
+  gap: 5px;
+
+  li {
+    button {
+      width: 15px;
+      height: 15px;
+      border-radius: 23px;
+      background-color: #fff;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      font-size: 0;
+      line-height: 0;
+      cursor: pointer;
+      color: transparent;
+      border: 0;
+      outline: none;
+      transition: all 0.5s ease;
+    }
+  }
+
+  li.slick-active {
+    button {
+      width: 35px;
+    }
+  }
+}
