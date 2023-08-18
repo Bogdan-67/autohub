@@ -1,6 +1,57 @@
 @import '../../scss/vars';
 
-footer {
+.footer {
   background-color: $main-clr;
   color: $text-wh-clr;
+
+  &__separator {
+    background: rgb(217, 217, 217);
+    background: linear-gradient(
+      90deg,
+      rgba(217, 217, 217, 0) 0%,
+      rgba(217, 217, 217, 1) 50%,
+      rgba(217, 217, 217, 0) 100%
+    );
+    width: 100%;
+    height: 1px;
+  }
+
+  &__content {
+    padding: 62px 200px;
+    display: flex;
+    gap: 131px;
+  }
+
+  &__logo {
+    height: 60px;
+  }
+
+  &__date {
+    margin-top: 18px;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 20px;
+  }
+
+  &__navblock {
+    display: flex;
+    flex-direction: column;
+
+    &__title,
+    &__link {
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 20px;
+    }
+
+    &__title {
+      color: $dop-clr;
+      text-transform: uppercase;
+    }
+
+    &__link {
+      color: $text-wh-clr;
+      margin-top: 12px;
+    }
+  }
 }
