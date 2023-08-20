@@ -1,0 +1,43 @@
+@import '../../../scss/vars';
+
+.filter {
+  width: 480px;
+  height: 100vh;
+  border: 2px solid $border-clr;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    border-bottom: 2px solid $border-clr;
+
+    &__separator {
+      width: 2px;
+      height: 100%;
+      background-color: $border-clr;
+    }
+
+    &__title {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 35px;
+      margin-left: 68px;
+      color: #171717;
+      flex: 1 1 auto;
+    }
+
+    &__refresh {
+      width: 70px;
+      height: 100%;
+      background: $back-clr;
+      border: none;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.5s ease;
+
+      &:hover {
+        filter: brightness(0.95);
+      }
+    }
+  }
+}
