@@ -5,6 +5,7 @@ import refresh from '../../../assets/refresh.svg';
 import BrandsFilter from './BrandsFilter';
 import { useAppDispatch } from '../../../redux/store';
 import { clearFilter } from '../../../redux/slices/filterSlice';
+import Price from './Price';
 
 const Filter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -22,6 +23,7 @@ const Filter: React.FC = () => {
         </button>
       </div>
       <Categories />
+      <Price />
       <BrandsFilter />
     </section>
   );

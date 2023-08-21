@@ -1,0 +1,42 @@
+@import '../../../../scss/vars';
+
+.content {
+  margin-top: 15px;
+  margin-left: 26px;
+}
+
+.prices {
+  display: flex;
+  gap: 40px;
+
+  &__box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__label {
+    font-weight: 500;
+  }
+
+  &__input {
+    width: 127px;
+    font-size: 17px;
+    line-height: 20px;
+    font-weight: 400;
+    padding: 5px 8px;
+    border-radius: 2px;
+    margin-top: 7px;
+    color: #878787;
+    border: 1px solid #878787;
+    transition: all 0.5s ease;
+
+    &:focus {
+      border: 1px solid $dark-clr;
+      color: $dark-clr;
+    }
+  }
+}
+
+.slider {
+  margin-top: 20px;
+}

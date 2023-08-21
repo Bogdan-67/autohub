@@ -13,7 +13,6 @@ import brands from '../../../Main/BrandsSlider/brands.json';
 import FilterBlock from '../FilterBlock';
 
 const BrandsFilter = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const selectedBrands = useSelector(SelectBrands);
   const dispatch = useAppDispatch();
 
