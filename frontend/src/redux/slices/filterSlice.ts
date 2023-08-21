@@ -31,12 +31,16 @@ const filterSlice = createSlice({
     clearCategory(state) {
       state.category = initialState.category;
     },
+    clearFilter(state) {
+      state.category = initialState.category;
+      state.brands = initialState.brands;
+    },
   },
 });
 
 export const SelectCategory = (state: RootState) => state.filters.category;
 export const SelectBrands = (state: RootState) => state.filters.brands;
-export const { setCategory, clearCategory, addBrand, removeBrand, clearBrands } =
+export const { setCategory, clearCategory, addBrand, removeBrand, clearBrands, clearFilter } =
   filterSlice.actions;
 
 export default filterSlice.reducer;
