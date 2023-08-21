@@ -31,25 +31,13 @@
   }
 }
 
-.category {
+.brand {
   margin-top: 10px;
   font-size: 17px;
   font-weight: 600;
   line-height: 20px;
-
-  &__title {
-    display: flex;
-    align-items: center;
-  }
-}
-
-.subcategory {
-  margin-top: 10px;
-}
-
-.subcategories {
-  margin-top: 10px;
-  margin-left: 20px;
+  color: #000;
+  cursor: pointer;
 }
 
 .active {

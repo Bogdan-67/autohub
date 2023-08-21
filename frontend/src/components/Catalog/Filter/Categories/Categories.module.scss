@@ -36,6 +36,7 @@
   font-size: 17px;
   font-weight: 600;
   line-height: 20px;
+  cursor: pointer;
 
   &__title {
     display: flex;
@@ -45,6 +46,7 @@
 
 .subcategory {
   margin-top: 10px;
+  cursor: pointer;
 }
 
 .subcategories {
