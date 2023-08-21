@@ -1,0 +1,37 @@
+@import '../../../../scss/vars';
+
+.filterBlock {
+  border-bottom: 2px solid #ececec;
+  padding: 33px 20px 33px 27px;
+
+  &__header {
+    display: flex;
+    cursor: pointer;
+
+    &__angle {
+      height: 17px;
+      transition: all 0.2s ease;
+    }
+
+    &__title {
+      flex: 1 1 auto;
+      font-size: 17px;
+      font-weight: 600;
+      text-transform: uppercase;
+      line-height: 20px;
+      margin-left: 10px;
+    }
+  }
+
+  &__list {
+    margin-top: 10px;
+    margin-left: 26px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+}
+
+.rotated {
+  transition: transform 0.2s ease;
+  transform: rotate(90deg);
+}
