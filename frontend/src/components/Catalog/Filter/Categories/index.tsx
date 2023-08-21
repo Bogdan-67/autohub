@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { useAppDispatch } from '../../../../redux/store';
 import { SelectCategory, clearCategory, setCategory } from '../../../../redux/slices/filterSlice';
 import { useSelector } from 'react-redux';
+import FilterBlock from '../FilterBlock';
 
 type CategoryProps = {
   id_type: number;
@@ -72,34 +73,22 @@ const Subcategory: FC<{ parent: number }> = ({ parent }) => {
 };
 
 const Categories = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const category = useSelector(SelectCategory);
   const dispatch = useAppDispatch();
 
   return (
-    <div className={styles.categories}>
-      <div className={styles.categories__header} onClick={() => setIsOpen(!isOpen)}>
-        <LiaAngleRightSolid
-          className={classNames(styles.categories__header__angle, { [styles.rotated]: isOpen })}
-        />
-        <h5 className={styles.categories__header__title}>Категории</h5>
-        {category && (
-          <RxCross2
-            className={styles.categories__header__cross}
-            onClick={() => dispatch(clearCategory())}
-          />
-        )}
-      </div>
-      {isOpen && (
-        <ul className={styles.categories__list}>
-          {categories
-            .filter((category: CategoryProps) => category.parent === null)
-            .map((category: CategoryProps) => (
-              <Category {...category} />
-            ))}
-        </ul>
-      )}
-    </div>
+    <FilterBlock
+      clearFunc={() => dispatch(clearCategory())}
+      title={'Категории'}
+      isSelected={!!category}>
+      <ul className={styles.categories__list}>
+        {categories
+          .filter((category: CategoryProps) => category.parent === null)
+          .map((category: CategoryProps) => (
+            <Category {...category} />
+          ))}
+      </ul>
+    </FilterBlock>
   );
 };
 
