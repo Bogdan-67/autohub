@@ -1,7 +1,7 @@
 @import '../../../../scss/vars';
 
 .filterBlock {
-  border-bottom: 2px solid #ececec;
+  border-bottom: $thin-border;
   padding: 33px 20px 33px 27px;
 
   &__header {

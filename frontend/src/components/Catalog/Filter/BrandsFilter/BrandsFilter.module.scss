@@ -1,7 +1,7 @@
 @import '../../../../scss/vars';
 
 .brands {
-  border-bottom: 2px solid #ececec;
+  border-bottom: $thin-border;
   padding: 33px 20px 33px 27px;
 
   &__header {
@@ -36,8 +36,39 @@
   font-size: 17px;
   font-weight: 600;
   line-height: 20px;
+  margin-left: 3px;
   color: #000;
   cursor: pointer;
+  display: flex;
+  gap: 8px;
+  align-items: start;
+}
+
+.checkbox {
+  background: transparent;
+  border: 2px solid $dark-clr;
+  width: 15px;
+  height: 15px;
+  margin-top: 2px;
+  border-radius: 3px;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+
+  &_checked {
+    border: 2px solid $dop-clr;
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0.2em;
+      top: 0.04em;
+      width: 0.14em;
+      height: 0.35em;
+
+      border: solid $dop-clr;
+      border-width: 0 0.15em 0.15em 0;
+      transform: rotate(45deg);
+    }
+  }
 }
 
 .active {
