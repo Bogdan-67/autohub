@@ -1,0 +1,8 @@
+@import '../../../scss/vars';
+
+.content {
+  height: 72px;
+  border: 2px solid $border-clr;
+  border-left: none;
+  min-width: 100%;
+}

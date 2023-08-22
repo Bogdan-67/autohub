@@ -1,0 +1,30 @@
+@import '../../../scss/vars';
+
+.sort {
+  width: 480px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-right: $thin-border;
+
+  &__label,
+  &__selected {
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 20px;
+    color: $dark-clr;
+  }
+
+  &__selected {
+    color: #828282;
+    position: relative;
+  }
+
+  &__list {
+    position: absolute;
+    top: 30px;
+    left: 0;
+  }
+}
