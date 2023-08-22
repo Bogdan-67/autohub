@@ -16,11 +16,14 @@ const FilterBlock: FC<FilterBlockProps> = ({ children, clearFunc, title, isSelec
 
   return (
     <div className={styles.filterBlock}>
-      <div className={styles.filterBlock__header} onClick={() => setIsOpen(!isOpen)}>
+      <div className={styles.filterBlock__header}>
         <LiaAngleRightSolid
+          onClick={() => setIsOpen(!isOpen)}
           className={classNames(styles.filterBlock__header__angle, { [styles.rotated]: isOpen })}
         />
-        <h5 className={styles.filterBlock__header__title}>{title}</h5>
+        <h5 className={styles.filterBlock__header__title} onClick={() => setIsOpen(!isOpen)}>
+          {title}
+        </h5>
         {isSelected && (
           <RxCross2
             className={styles.filterBlock__header__cross}
