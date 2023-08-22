@@ -37,6 +37,10 @@ const BrandsFilter = () => {
               [styles.active]: selectedBrands.includes(brand.id),
             })}
             onClick={() => handleClick(brand.id)}>
+            <span
+              className={classNames(styles.checkbox, {
+                [styles.checkbox_checked]: selectedBrands.includes(brand.id),
+              })}></span>
             {brand.name}
           </li>
         ))}
