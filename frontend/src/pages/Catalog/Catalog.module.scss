@@ -3,5 +3,13 @@
 
   &__content {
     width: 100%;
+
+    &__goods {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 8px 0;
+      gap: 8px;
+      justify-content: center;
+    }
   }
 }
