@@ -31,7 +31,9 @@ const Category: FC<CategoryProps> = ({ id_type, type_name, link, parent }) => {
       <p
         className={classNames(styles.category__title, { [styles.active]: category === id_type })}
         onClick={() => handleClick()}>
-        <RxTriangleRight className={classNames({ [styles.rotated]: isOpen })} />
+        {categories.filter((item: CategoryProps) => item.parent === id_type).length !== 0 && (
+          <RxTriangleRight className={classNames({ [styles.rotated]: isOpen })} />
+        )}
         {type_name}
       </p>
       {isOpen && <Subcategory parent={id_type} />}
@@ -40,14 +42,14 @@ const Category: FC<CategoryProps> = ({ id_type, type_name, link, parent }) => {
 };
 
 const Subcategory: FC<{ parent: number }> = ({ parent }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [openedCategory, setOpenedCategory] = useState<number>(null);
   const category = useSelector(SelectCategory);
   const dispatch = useAppDispatch();
 
   const subcategories = categories.filter((item: CategoryProps) => item.parent === parent);
 
   const handleClick = (id_type: number) => {
-    setIsOpen(!isOpen);
+    setOpenedCategory(id_type);
     dispatch(setCategory(id_type));
   };
 
@@ -61,10 +63,17 @@ const Subcategory: FC<{ parent: number }> = ({ parent }) => {
                 [styles.active]: category === subcategory.id_type,
               })}
               onClick={() => handleClick(subcategory.id_type)}>
-              <RxTriangleRight className={classNames({ [styles.rotated]: isOpen })} />
+              {categories.filter((item: CategoryProps) => item.parent === subcategory.id_type)
+                .length !== 0 && (
+                <RxTriangleRight
+                  className={classNames({
+                    [styles.rotated]: subcategory.id_type === openedCategory,
+                  })}
+                />
+              )}
               {subcategory.type_name}
             </p>
-            {isOpen && <Subcategory parent={subcategory.id_type} />}
+            {subcategory.id_type === openedCategory && <Subcategory parent={subcategory.id_type} />}
           </li>
         );
       })}
@@ -84,8 +93,8 @@ const Categories = () => {
       <ul className={styles.categories__list}>
         {categories
           .filter((category: CategoryProps) => category.parent === null)
-          .map((category: CategoryProps) => (
-            <Category {...category} />
+          .map((category: CategoryProps, index) => (
+            <Category key={index} {...category} />
           ))}
       </ul>
     </FilterBlock>
