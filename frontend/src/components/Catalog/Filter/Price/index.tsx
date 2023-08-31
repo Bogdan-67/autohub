@@ -16,8 +16,6 @@ const Price = () => {
   const prices = useSelector(SelectPrices);
   const dispatch = useAppDispatch();
 
-  console.log('prices', prices);
-
   return (
     <FilterBlock
       title={'Цена'}

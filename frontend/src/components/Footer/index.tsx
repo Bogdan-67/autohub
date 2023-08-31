@@ -83,8 +83,8 @@ const Footer: FC = () => {
         {footerNav.map((navblock, index) => (
           <div key={index} className={styles.footer__navblock}>
             <h5 className={styles.footer__navblock__title}>{navblock.title}</h5>
-            {navblock.items.map((item) => (
-              <Link to={item.link} className={styles.footer__navblock__link}>
+            {navblock.items.map((item, index) => (
+              <Link key={index} to={item.link} className={styles.footer__navblock__link}>
                 {item.text}
               </Link>
             ))}
