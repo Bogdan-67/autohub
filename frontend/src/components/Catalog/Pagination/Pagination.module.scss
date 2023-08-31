@@ -1,0 +1,49 @@
+@import '../../../scss/_vars.scss';
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: $thin-border;
+  border-left: none;
+  height: 70px;
+  width: 100%;
+
+  &__page,
+  &__button {
+    height: 100%;
+    width: 66px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $dark-clr;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 20px;
+  }
+
+  &__page {
+    border-left: $thin-border;
+
+    &:last-child {
+      border-right: $thin-border;
+    }
+
+    &_disabled {
+    }
+
+    &_active {
+      color: $dop-clr;
+    }
+  }
+
+  &__button {
+    &_previous {
+      border-right: $thin-border;
+    }
+
+    &_next {
+      border-left: $thin-border;
+    }
+  }
+}

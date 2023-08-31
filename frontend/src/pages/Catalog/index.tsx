@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Catalog.module.scss';
 import Filter from '../../components/Catalog/Filter';
 import TopSidebar from '../../components/Catalog/TopSidebar';
@@ -7,9 +7,11 @@ import { SelectView } from '../../redux/slices/filterSlice';
 import GoodCard from '../../components/Catalog/Good/Card';
 import GoodRow from '../../components/Catalog/Good/Row';
 import sub from '../../assets/sub.png';
+import Pagination from '../../components/Catalog/Pagination';
 
 export const Catalog: React.FC = () => {
   const view = useAppSelector(SelectView);
+  const [page, setPage] = useState<number>(1);
 
   const goods = [...Array(12)].map((_, index) => {
     return {
@@ -33,6 +35,7 @@ export const Catalog: React.FC = () => {
             }
           })}
         </div>
+        <Pagination page={page} pageCount={7} handlePageClick={setPage} />
       </div>
     </section>
   );
