@@ -3,7 +3,7 @@
 .filter {
   min-width: 480px;
   width: 480px;
-  height: 100vh;
+  flex: 1 1 auto;
   border: $thin-border;
 
   &__header {
