@@ -1,6 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
+export enum SortPropertyEnum {
+  TITLE_DESC = 'title',
+  TITLE_ASC = '-title',
+  PRICE_DESC = 'price',
+  PRICE_ASC = '-price',
+}
+
+type SortType = {
+  name: string;
+  sortProperty: SortPropertyEnum;
+};
+
 interface FilterState {
   category: number;
   brands: number[];
@@ -8,6 +20,8 @@ interface FilterState {
     min: number;
     max: number;
   };
+  sort: SortType;
+  view: string;
 }
 
 const initialState: FilterState = {
@@ -17,6 +31,11 @@ const initialState: FilterState = {
     min: 0,
     max: 1000,
   },
+  sort: {
+    name: 'по алфавиту (А-Я)',
+    sortProperty: SortPropertyEnum.TITLE_ASC,
+  },
+  view: 'cards',
 };
 
 const filterSlice = createSlice({
@@ -53,9 +72,17 @@ const filterSlice = createSlice({
       state.brands = initialState.brands;
       state.prices = initialState.prices;
     },
+    setSort(state, action: PayloadAction<SortType>) {
+      state.sort = action.payload;
+    },
+    setView(state, action: PayloadAction<string>) {
+      state.view = action.payload;
+    },
   },
 });
 
+export const SelectSort = (state: RootState) => state.filters.sort;
+export const SelectView = (state: RootState) => state.filters.view;
 export const SelectPrices = (state: RootState) => state.filters.prices;
 export const SelectCategory = (state: RootState) => state.filters.category;
 export const SelectBrands = (state: RootState) => state.filters.brands;
@@ -69,6 +96,8 @@ export const {
   setMinPrice,
   setMaxPrice,
   clearPrices,
+  setSort,
+  setView,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;
