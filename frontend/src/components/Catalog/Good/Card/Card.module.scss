@@ -1,0 +1,33 @@
+@import '../../../../scss/vars';
+
+.card {
+  width: 463px;
+  height: 463px;
+  border: $thin-border;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__img {
+    width: 78%;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 23px;
+    line-height: 28px;
+    color: $dark-clr;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__price {
+    margin-top: 10px;
+  }
+}
