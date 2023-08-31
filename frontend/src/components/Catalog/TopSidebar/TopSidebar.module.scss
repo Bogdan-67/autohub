@@ -5,4 +5,93 @@
   border: 2px solid $border-clr;
   border-left: none;
   min-width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  &__right {
+    border-left: 2px solid $border-clr;
+    display: flex;
+  }
+}
+
+.cards {
+  border-right: 2px solid $border-clr;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3.5px;
+  align-content: center;
+  padding: 15px;
+  transition: $transition;
+
+  &:hover {
+    cursor: pointer;
+    background: $border-clr;
+  }
+
+  span {
+    display: block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid $dark-clr;
+    border-radius: 5px;
+  }
+}
+
+.rows {
+  border-right: 2px solid $border-clr;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px;
+  transition: $transition;
+
+  &:hover {
+    cursor: pointer;
+    background: $border-clr;
+  }
+
+  span {
+    display: block;
+    width: 30px;
+    height: 13px;
+    border: 2px solid $dark-clr;
+    border-radius: 4px;
+  }
+}
+
+.compare {
+  width: 340px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  line-height: 20px;
+  font-weight: 600;
+  transition: $transition;
+
+  &:hover {
+    cursor: pointer;
+    background: $border-clr;
+  }
+
+  &__count {
+    margin-left: 10px;
+    background: $dop-clr;
+    border-radius: 100px;
+    padding: 4px 9px;
+  }
+}
+
+.active {
+  border-color: $dop-clr !important;
+  transition: all 0.15s ease;
 }
