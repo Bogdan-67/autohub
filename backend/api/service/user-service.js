@@ -8,7 +8,7 @@ const ApiError = require('../exceptions/api-error');
 const SelectUsersDTO = require('../dtos/selectUsers-dto');
 
 class UserService {
-  async createUser({ name, surname, patronimyc, phone, email, login, password, team }) {
+  async createUser({ name, surname, patronimyc, phone, email, login, password, car }) {
     const checkPhone = await db.query(`SELECT * FROM users WHERE phone = $1`, [phone]);
     if (checkPhone.rows[0]) {
       throw ApiError.BadRequest('Пользователь с таким номером телефона уже зарегистрирован!');
@@ -21,9 +21,11 @@ class UserService {
     if (checkLogin.rows[0]) {
       throw ApiError.BadRequest('Пользователь с таким логином уже зарегистрирован!');
     }
+    const fio = [surname, name, patronimyc];
+    const fioStr = fio.filter((item) => !!item).join(' ');
     const newUser = await db.query(
-      `INSERT INTO users(name, surname, patronimyc, phone, email, team) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [name, surname, patronimyc, phone, email, team],
+      `INSERT INTO users(name, surname, patronimyc, phone, email, car, fio) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      [name, surname, patronimyc, phone, email, car, fioStr],
     );
     const hashPassword = await bcrypt.hash(password, 3);
     const newAccount = await db.query(

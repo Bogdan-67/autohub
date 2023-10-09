@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styles from './Catalog.module.scss';
-import Filter from '../../components/Catalog/Filter';
-import TopSidebar from '../../components/Catalog/TopSidebar';
-import { useAppSelector } from '../../hooks/redux';
-import { SelectView } from '../../redux/slices/filterSlice';
-import GoodCard from '../../components/Catalog/Good/Card';
-import GoodRow from '../../components/Catalog/Good/Row';
-import sub from '../../assets/sub.png';
-import Pagination from '../../components/Catalog/Pagination';
+import Filter from '../../../components/Catalog/Filter';
+import TopSidebar from '../../../components/Catalog/TopSidebar';
+import { useAppSelector } from '../../../hooks/redux';
+import { SelectView } from '../../../redux/slices/filterSlice';
+import GoodCard from '../../../components/Catalog/Good/Card';
+import GoodRow from '../../../components/Catalog/Good/Row';
+import sub from '../../../assets/sub.png';
+import Pagination from '../../../components/Catalog/Pagination';
 
 export const Catalog: React.FC = () => {
   const view = useAppSelector(SelectView);

@@ -1,0 +1,8 @@
+@import '../../../scss/vars';
+
+.card {
+  padding: 46px;
+  color: $back-clr;
+  //   filter: drop-shadow(0 4px 89px rgba($color: #000, $alpha: 0.25));
+  box-shadow: 0 4px 89px -26px rgba($color: #000, $alpha: 0.25);
+}
