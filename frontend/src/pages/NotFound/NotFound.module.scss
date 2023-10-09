@@ -1,0 +1,22 @@
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+
+  &__numbers {
+    font-size: 120px;
+    font-weight: 700;
+    color: #c4c4c4;
+  }
+
+  &__text {
+    font-size: 30px;
+    color: #c4c4c4;
+  }
+
+  &__button {
+    margin-top: 30px;
+  }
+}
