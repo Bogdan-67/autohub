@@ -3,11 +3,12 @@ const router = new Router();
 const GoodController = require('../controller/good.controller');
 const checkRole = require('../middlewares/check-role-middleware');
 
-router.post('/slider', checkRole('ADMIN'), sliderController.createSliderItem);
+router.post('/goods', checkRole('ADMIN'), GoodController.createGood);
 router.get('/goods', GoodController.getGoods);
+router.get('/brands', GoodController.getBrands);
 router.get('/filters', GoodController.getFilters);
-router.get('/slider/:id', sliderController.getOneSliderItem);
-router.put('/slider/:id', checkRole('ADMIN'), sliderController.editSliderItem);
-router.delete('/slider/:id', checkRole('ADMIN'), sliderController.deleteSliderItem);
+router.get('/goods/:id', GoodController.getOneGood);
+router.put('/goods/:id', checkRole('ADMIN'), GoodController.updateGood);
+router.delete('/goods/:id', checkRole('ADMIN'), GoodController.deleteGood);
 
 module.exports = router;

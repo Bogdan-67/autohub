@@ -8,8 +8,25 @@ class GoodService {
     const goods = await db.query(`SELECT * FROM goods`);
     return goods.rows;
   }
-  async getFilters({ type_id }) {
-    const goods = await db.query(`SELECT * FROM goods WHERE type_id = $1`, [type_id]);
+  async getGoodsByCategory(category_id) {
+    const goods = await db.query(`SELECT * FROM goods WHERE category_id = $1`, [category_id]);
+    return goods.rows;
+  }
+  async getBrands({ category_id }) {
+    const brandsFromDb = await db.query(`SELECT * FROM brands`);
+    if (category_id) {
+      const goods = await this.getGoodsByCategory(category_id);
+      let brands = [];
+      for (let i in goods.rows) {
+        const good = goods.rows[i];
+        if (!brands.find((brand) => brand.id_brand === good.brand_id))
+          brands.push(brandsFromDb.find((brand) => brand.id_brand === good.brand_id));
+      }
+      return brands;
+    } else return brandsFromDb.rows;
+  }
+  async getFilters({ category_id }) {
+    const goods = await this.getGoodsByCategory(category_id);
     const filters = new Object();
     for (let i in goods.rows) {
       const good_id = goods.rows[i].id_good;
