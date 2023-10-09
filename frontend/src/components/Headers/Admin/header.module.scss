@@ -1,0 +1,120 @@
+@import '../../../scss/vars';
+
+header {
+  a {
+    color: $text-wh-clr;
+  }
+
+  display: flex;
+  justify-content: space-between;
+  background-color: $main-clr;
+  padding: 32px 67px;
+  color: $text-wh-clr;
+  text-transform: uppercase;
+  .logo {
+  }
+  .active {
+    color: $dop-clr !important;
+  }
+  .menu {
+    position: relative;
+    color: $text-wh-clr;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    &__button {
+      border: none;
+      color: $text-wh-clr;
+      background-color: transparent;
+      cursor: pointer;
+    }
+    &__item,
+    a {
+      font-size: 17px;
+      font-weight: 500;
+      color: $text-wh-clr;
+      float: left;
+      margin: 0 10px;
+      transition: all 0.2s;
+      &:hover {
+        text-shadow: 0px 0px 20px 5px red;
+      }
+    }
+  }
+  .menu_items {
+    top: 50px;
+    left: 10px;
+    position: absolute;
+    height: 0;
+    background-color: $back-clr;
+    color: $text-clr;
+    overflow: hidden;
+    transition: height 1s;
+  }
+  .open {
+    box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    height: auto;
+  }
+  .item {
+    transition: all 0.2s;
+    &:hover {
+      scale: 1.1;
+    }
+  }
+  .box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+    gap: 15px;
+
+    .search {
+      cursor: pointer;
+    }
+
+    .login {
+      cursor: pointer;
+    }
+
+    .cart {
+      position: relative;
+      .alert {
+        right: -18px;
+        top: -18px;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        border-radius: 50%;
+        color: $text-wh-clr;
+        background-color: $dop-clr;
+        align-items: center;
+        width: 22px;
+        font-size: 13.75px;
+        color: $main-clr;
+        font-weight: 600;
+        height: 22px;
+      }
+    }
+  }
+}
+
+.auth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  width: 400px;
+
+  &__text {
+    color: $text-wh-clr;
+    font-size: 11px;
+  }
+
+  &__link {
+    color: $dop-clr;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

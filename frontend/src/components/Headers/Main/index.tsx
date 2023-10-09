@@ -2,12 +2,12 @@ import { FC, useEffect, useState } from 'react';
 import styles from './header.module.scss';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
-import logo from '../../assets/logo.png';
-import Modal from '../common/Modal';
-import LoginForm from '../Auth/LoginForm';
-import RegistrForm from '../Auth/RegistrForm';
-import { useAppSelector } from '../../hooks/redux';
-import { SelectIsAuth, SelectUser } from '../../redux/slices/authSlice';
+import logo from '../../../assets/logo.png';
+import Modal from '../../common/Modal';
+import LoginForm from '../../Auth/LoginForm';
+import RegistrForm from '../../Auth/RegistrForm';
+import { useAppSelector } from '../../../hooks/redux';
+import { SelectIsAuth, SelectUser } from '../../../redux/slices/authSlice';
 
 const menuItems = [
   { id: 1, title: 'Проекты', path: '/projects' },
@@ -17,11 +17,9 @@ const menuItems = [
   { id: 5, title: 'Контакты', path: '/contacts' },
 ];
 
-interface Props {
-  auth: boolean;
-}
+interface Props {}
 
-const Header: FC<Props> = ({ auth }) => {
+const MainHeader: FC<Props> = ({}) => {
   const location = useLocation();
   const item = 3;
   const [isOpen, setIsOpen] = useState(false);
@@ -130,4 +128,4 @@ const Header: FC<Props> = ({ auth }) => {
   );
 };
 
-export default Header;
+export default MainHeader;
