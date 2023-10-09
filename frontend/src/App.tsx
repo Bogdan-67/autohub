@@ -3,7 +3,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import './scss/app.scss';
 
 import NotFound from './pages/NotFound';
-import Header from './components/Header';
+import Header from './components/Headers/Main';
 import Footer from './components/Footer';
 
 import Profile from './pages/User/Profile/EditProfile';
@@ -20,6 +20,8 @@ import { useAppDispatch } from './redux/store';
 import { useAppSelector } from './hooks/redux';
 import AdminHome from './pages/Admin/Home';
 import AdminMainSlider from './pages/Admin/MainSlider';
+import MainLayout from './layouts/MainLayout';
+import AdminLayout from './layouts/AdminLayout';
 
 function App() {
   const location = useLocation();
@@ -34,24 +36,8 @@ function App() {
 
   return (
     <>
-      <Header auth={login} />
-
-      <div className='main'>
-        <Routes location={location} key={location.pathname}>
-          <Route path='/' element={<Main />}></Route>
-          <Route path='/catalog' element={<Catalog />}></Route>
-          <Route path='/about' element={<About />}></Route>
-          <Route path='/brands' element={<Brands />}></Route>
-          <Route path='/contacts' element={<Contacts />}></Route>
-          <Route path='/projects' element={<Projects />}></Route>
-          <Route
-            path='/profile'
-            element={
-              <RequireAuth redirectTo={'/'}>
-                <Profile />
-              </RequireAuth>
-            }></Route>
-          <Route path='/cart' element={<Cart />}></Route>
+      <Routes location={location} key={location.pathname}>
+        <Route path='/admin' element={<AdminLayout />}>
           <Route
             path='/admin'
             element={
@@ -66,11 +52,26 @@ function App() {
                 <AdminMainSlider />
               </RequireAdmin>
             }></Route>
+          <Route path='*' element={<NotFound link='/admin' />}></Route>
+        </Route>
+        <Route path='/' element={<MainLayout />}>
+          <Route path='/' element={<Main />}></Route>
+          <Route path='/catalog' element={<Catalog />}></Route>
+          <Route path='/about' element={<About />}></Route>
+          <Route path='/brands' element={<Brands />}></Route>
+          <Route path='/contacts' element={<Contacts />}></Route>
+          <Route path='/projects' element={<Projects />}></Route>
+          <Route
+            path='/profile'
+            element={
+              <RequireAuth redirectTo={'/'}>
+                <Profile />
+              </RequireAuth>
+            }></Route>
+          <Route path='/cart' element={<Cart />}></Route>
           <Route path='*' element={<NotFound />}></Route>
-        </Routes>
-      </div>
-
-      <Footer />
+        </Route>
+      </Routes>
     </>
   );
 }

@@ -10,33 +10,35 @@ import { useSelector } from 'react-redux';
 import FilterBlock from '../FilterBlock';
 
 type CategoryProps = {
-  id_type: number;
-  type_name: string;
+  id_category: number;
+  name: string;
   parent: number;
   link: string;
 };
 
-const Category: FC<CategoryProps> = ({ id_type, type_name, link, parent }) => {
+const Category: FC<CategoryProps> = ({ id_category, name, link, parent }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const category = useSelector(SelectCategory);
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
     setIsOpen(!isOpen);
-    dispatch(setCategory(id_type));
+    dispatch(setCategory(id_category));
   };
 
   return (
-    <li key={id_type} className={styles.category}>
+    <li key={id_category} className={styles.category}>
       <p
-        className={classNames(styles.category__title, { [styles.active]: category === id_type })}
+        className={classNames(styles.category__title, {
+          [styles.active]: category === id_category,
+        })}
         onClick={() => handleClick()}>
-        {categories.filter((item: CategoryProps) => item.parent === id_type).length !== 0 && (
+        {categories.filter((item: CategoryProps) => item.parent === id_category).length !== 0 && (
           <RxTriangleRight className={classNames({ [styles.rotated]: isOpen })} />
         )}
-        {type_name}
+        {name}
       </p>
-      {isOpen && <Subcategory parent={id_type} />}
+      {isOpen && <Subcategory parent={id_category} />}
     </li>
   );
 };
@@ -48,32 +50,34 @@ const Subcategory: FC<{ parent: number }> = ({ parent }) => {
 
   const subcategories = categories.filter((item: CategoryProps) => item.parent === parent);
 
-  const handleClick = (id_type: number) => {
-    setOpenedCategory(id_type);
-    dispatch(setCategory(id_type));
+  const handleClick = (id_category: number) => {
+    setOpenedCategory(id_category);
+    dispatch(setCategory(id_category));
   };
 
   return (
     <ul className={styles.subcategories}>
       {subcategories.map((subcategory) => {
         return (
-          <li key={subcategory.id_type} className={styles.subcategory}>
+          <li key={subcategory.id_category} className={styles.subcategory}>
             <p
               className={classNames(styles.subcategory__title, {
-                [styles.active]: category === subcategory.id_type,
+                [styles.active]: category === subcategory.id_category,
               })}
-              onClick={() => handleClick(subcategory.id_type)}>
-              {categories.filter((item: CategoryProps) => item.parent === subcategory.id_type)
+              onClick={() => handleClick(subcategory.id_category)}>
+              {categories.filter((item: CategoryProps) => item.parent === subcategory.id_category)
                 .length !== 0 && (
                 <RxTriangleRight
                   className={classNames({
-                    [styles.rotated]: subcategory.id_type === openedCategory,
+                    [styles.rotated]: subcategory.id_category === openedCategory,
                   })}
                 />
               )}
-              {subcategory.type_name}
+              {subcategory.name}
             </p>
-            {subcategory.id_type === openedCategory && <Subcategory parent={subcategory.id_type} />}
+            {subcategory.id_category === openedCategory && (
+              <Subcategory parent={subcategory.id_category} />
+            )}
           </li>
         );
       })}

@@ -32,15 +32,15 @@ CREATE TABLE tokens(
 
 CREATE TABLE brands(
     id_brand SERIAL PRIMARY KEY,
-    brand_name VARCHAR(255) NOT NULL,
-    brand_logo VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    logo VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
     url VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE types(
-    id_type SERIAL PRIMARY KEY,
-    type_name VARCHAR(255) NOT NULL,
+CREATE TABLE categories(
+    id_category SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
     parent INTEGER,
     img VARCHAR(255)
 );
@@ -49,8 +49,8 @@ CREATE TABLE goods(
     id_good SERIAL PRIMARY KEY,
     good_name VARCHAR(255) NOT NULL,
     article VARCHAR(255) NOT NULL,
-    type_id INTEGER NOT NULL,
-    FOREIGN KEY (type_id) REFERENCES types(id_type) ON DELETE CASCADE,
+    category_id INTEGER NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES categories(id_category) ON DELETE CASCADE,
     brand_id INTEGER NOT NULL,
     FOREIGN KEY (brand_id) REFERENCES brands(id_brand) ON DELETE CASCADE,
     price REAL,
@@ -108,6 +108,7 @@ CREATE TABLE main_slider(
     img VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
     description VARCHAR(255),
+    link VARCHAR(255),
     active BOOLEAN DEFAULT true
 );
 

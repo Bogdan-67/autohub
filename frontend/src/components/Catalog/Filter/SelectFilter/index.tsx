@@ -13,11 +13,15 @@ const SelectFilter: FC<SelectFilterProps> = ({
   clearItems,
 }) => {
   const handleClick = (item: SelectItem) => {
-    if (selectedItems.includes(item)) {
+    if (selectedItems.includes(item.id)) {
       removeItem(item.id);
     } else {
       addItem(item.id);
     }
+  };
+
+  const isSelected = () => {
+    items.forEach((item) => selectedItems.includes(item.id));
   };
 
   return (
@@ -27,12 +31,12 @@ const SelectFilter: FC<SelectFilterProps> = ({
           <li
             key={item.id}
             className={classNames(styles.brand, {
-              [styles.active]: selectedItems.includes(item),
+              [styles.active]: selectedItems.includes(item.id),
             })}
             onClick={() => handleClick(item)}>
             <span
               className={classNames(styles.checkbox, {
-                [styles.checkbox_checked]: selectedItems.includes(item),
+                [styles.checkbox_checked]: selectedItems.includes(item.id),
               })}></span>
             {item.title}
           </li>

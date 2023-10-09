@@ -3,7 +3,9 @@ import $api from '../http';
 import { AxiosResponse } from 'axios';
 
 export default class FilterService {
-  static fetchFilters(type_id: number): Promise<AxiosResponse<{ [key: string]: SelectItem }>> {
-    return $api.get<{ [key: string]: SelectItem }>(`/filters?type_id=${type_id}`);
+  static fetchFilters(
+    category_id: number,
+  ): Promise<AxiosResponse<{ [key: string]: SelectItem[] }, any>> {
+    return $api.get<{ [key: string]: SelectItem[] }>(`/filters?category_id=${category_id}`);
   }
 }
