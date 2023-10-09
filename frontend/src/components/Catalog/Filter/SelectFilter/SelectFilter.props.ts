@@ -1,7 +1,7 @@
 export interface SelectFilterProps {
   title: string;
   items: SelectItem[];
-  selectedItems: SelectItem[];
+  selectedItems: number[];
   addItem: (id: number) => void;
   removeItem: (id: number) => void;
   clearItems: () => void;

@@ -9,15 +9,18 @@ import Price from './Price';
 import { useAppSelector } from '../../../hooks/redux';
 import FilterService from '../../../services/FIlterService';
 import { SelectItem } from './SelectFilter/SelectFilter.props';
+import SelectFilter from './SelectFilter';
 
 const Filter: React.FC = () => {
   const category = useAppSelector(SelectCategory);
   const dispatch = useAppDispatch();
-  const [categoryFilters, setCategoryFilters] = useState<{ [key: string]: SelectItem }>(null);
+  const [categoryFilters, setCategoryFilters] = useState<{ [key: string]: SelectItem[] }>(null);
+  const [selectedFeatures, setSelectedFeatures] = useState<number[]>([]);
 
   const getFiltersByCategory = async (category: number) => {
     await FilterService.fetchFilters(category).then((response) => {
-      setCategoryFilters(response);
+      setCategoryFilters(response.data);
+      console.log(response.data);
     });
   };
 
@@ -42,6 +45,23 @@ const Filter: React.FC = () => {
       <Categories />
       <Price />
       <BrandsFilter />
+      {categoryFilters &&
+        Object.entries(categoryFilters).map((filter) => (
+          <SelectFilter
+            title={filter[0]}
+            items={filter[1]}
+            selectedItems={selectedFeatures}
+            addItem={(id) => setSelectedFeatures((prev) => [...prev, id])}
+            removeItem={(id) =>
+              setSelectedFeatures((prev) => prev.filter((prevId) => prevId !== id))
+            }
+            clearItems={() =>
+              setSelectedFeatures((prev) =>
+                prev.filter((prevId) => !filter[1].find((feature) => feature.id === prevId)),
+              )
+            }
+          />
+        ))}
     </section>
   );
 };
