@@ -23,15 +23,19 @@
       color: inherit;
       font-size: 64px;
       margin-bottom: 55px;
+      line-height: 1em;
+      width: 70%;
+      text-shadow: 0 0 5px rgba($color: #000, $alpha: 0.5);
     }
 
     &__text {
       color: inherit;
       font-size: 17px;
       text-transform: uppercase;
-      width: 400px;
+      width: 600px;
       margin-bottom: 55px;
       line-height: 36px;
+      text-shadow: 0 0 5px rgba($color: #000, $alpha: 0.5);
     }
 
     &__btn {

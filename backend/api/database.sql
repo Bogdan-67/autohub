@@ -6,9 +6,7 @@ CREATE TABLE users(
     fio VARCHAR(255) NOT NULL,
     phone VARCHAR(20),
     email VARCHAR(100),
-    company VARCHAR(255),
-    post VARCHAR(255),
-    city VARCHAR(255)
+    car VARCHAR(255)
 );
 
 CREATE TABLE roles(
@@ -20,7 +18,6 @@ CREATE TABLE accounts(
     id_account SERIAL PRIMARY KEY,
     login VARCHAR(255) NOT NULL,   
     password VARCHAR(255) NOT NULL,
-    confirmed BOOLEAN,
     role_id INTEGER NOT NULL DEFAULT 1,
     FOREIGN KEY (role_id) REFERENCES roles(id_role) ON DELETE CASCADE,
     id_user INTEGER NOT NULL,
@@ -31,14 +28,6 @@ CREATE TABLE tokens(
     account_id SERIAL PRIMARY KEY,
     FOREIGN KEY (account_id) REFERENCES accounts(id_account) ON DELETE CASCADE,
     refresh_token TEXT NOT NULL
-);
-
-CREATE TABLE applications(
-    id_application SERIAL PRIMARY KEY,
-    account_id SERIAL PRIMARY KEY,
-    FOREIGN KEY (account_id) REFERENCES accounts(id_account) ON DELETE CASCADE,
-    status INTEGER NOT NULL,
-    datetime DATE DEFAULT current_date,
 );
 
 CREATE TABLE brands(
@@ -67,13 +56,11 @@ CREATE TABLE goods(
     price REAL,
     img VARCHAR(255),
     description TEXT,
-    features VARCHAR(255),
-    secret BOOLEAN NOT NULL DEFAULT FALSE,
     storage INTEGER NOT NULL DEFAULT 0
 );
 
-CREATE TABLE good_info(
-    id_good_info SERIAL PRIMARY KEY,
+CREATE TABLE good_features(
+    id_feature SERIAL PRIMARY KEY,
     good_id INTEGER NOT NULL,
     FOREIGN KEY (good_id) REFERENCES goods(id_good) ON DELETE CASCADE,
     title VARCHAR(255) NOT NULL,
@@ -110,28 +97,18 @@ CREATE TABLE order_goods(
     FOREIGN KEY (good_id) REFERENCES goods(id_good) ON DELETE CASCADE
 );
 
-CREATE TABLE dealers(
-    id_dealer SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    city VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    site VARCHAR(255),
-    coordinates VARCHAR(255)
-);
-
-CREATE TABLE dealer_adresses(
-    id_dealer_adress SERIAL PRIMARY KEY,
-    adress VARCHAR(255) NOT NULL,
-    phone VARCHAR(255) NOT NULL,
-    locale_email VARCHAR(255),
-    dealer_id INTEGER NOT NULL,
-    FOREIGN KEY (dealer_id) REFERENCES dealers(id_dealer) ON DELETE CASCADE
-);
-
 CREATE TABLE projects(
     id_project SERIAL PRIMARY KEY,
     content TEXT NOT NULL,
     img VARCHAR(255)
+);
+
+CREATE TABLE main_slider(
+    id SERIAL PRIMARY KEY,
+    img VARCHAR(255) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(255),
+    active BOOLEAN DEFAULT true
 );
 
 INSERT INTO roles(role_name) VALUES ('USER') RETURNING *;
