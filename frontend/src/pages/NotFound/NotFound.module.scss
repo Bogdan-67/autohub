@@ -16,7 +16,16 @@
     color: #c4c4c4;
   }
 
-  &__button {
+  &__buttons {
     margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  &__button {
+    &__icon {
+      font-size: 18px;
+    }
   }
 }
