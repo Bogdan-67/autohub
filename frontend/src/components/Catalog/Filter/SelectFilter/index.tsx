@@ -20,10 +20,6 @@ const SelectFilter: FC<SelectFilterProps> = ({
     }
   };
 
-  const isSelected = () => {
-    items.forEach((item) => selectedItems.includes(item.id));
-  };
-
   return (
     <FilterBlock clearFunc={() => clearItems()} title={title} isSelected={!!selectedItems.length}>
       <ul className={styles.brands__list}>

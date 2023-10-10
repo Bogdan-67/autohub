@@ -15,12 +15,26 @@ const Filter: React.FC = () => {
   const category = useAppSelector(SelectCategory);
   const dispatch = useAppDispatch();
   const [categoryFilters, setCategoryFilters] = useState<{ [key: string]: SelectItem[] }>(null);
-  const [selectedFeatures, setSelectedFeatures] = useState<number[]>([]);
+  const [selectedFeatures, setSelectedFeatures] = useState<{
+    [key: string]: number[];
+  }>(null);
+
+  const SelectItemInNumber = (data: SelectItem[]) => {
+    return data.map((item: SelectItem) => item.id);
+  };
 
   const getFiltersByCategory = async (category: number) => {
     await FilterService.fetchFilters(category).then((response) => {
-      setCategoryFilters(response.data);
-      console.log(response.data);
+      const data = response.data;
+      setCategoryFilters(data);
+      const featuresIds: { [key: string]: number[] } = {};
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          featuresIds[key] = SelectItemInNumber(data[key]);
+        }
+      }
+      setSelectedFeatures(featuresIds);
+      console.log(data);
     });
   };
 
@@ -29,6 +43,15 @@ const Filter: React.FC = () => {
       getFiltersByCategory(category);
     }
   }, [category]);
+
+  useEffect(() => {
+    let filters = new Array();
+    for (let key in selectedFeatures) {
+      if (selectedFeatures[key] && selectedFeatures[key].length > 0)
+        filters = [...filters, ...selectedFeatures[key]];
+      else filters = [...filters, ...SelectItemInNumber(categoryFilters[key])];
+    }
+  }, [selectedFeatures]);
 
   return (
     <section className={styles.filter}>
@@ -46,22 +69,36 @@ const Filter: React.FC = () => {
       <Price />
       <BrandsFilter />
       {categoryFilters &&
-        Object.entries(categoryFilters).map((filter) => (
-          <SelectFilter
-            title={filter[0]}
-            items={filter[1]}
-            selectedItems={selectedFeatures}
-            addItem={(id) => setSelectedFeatures((prev) => [...prev, id])}
-            removeItem={(id) =>
-              setSelectedFeatures((prev) => prev.filter((prevId) => prevId !== id))
-            }
-            clearItems={() =>
-              setSelectedFeatures((prev) =>
-                prev.filter((prevId) => !filter[1].find((feature) => feature.id === prevId)),
-              )
-            }
-          />
-        ))}
+        Object.entries(categoryFilters).map((filter) => {
+          const filterName = filter[0];
+          const filterData = filter[1];
+
+          return (
+            <SelectFilter
+              title={filterName}
+              items={filterData}
+              selectedItems={selectedFeatures[filterName]}
+              addItem={(id) => {
+                let features = selectedFeatures;
+                if (features.length) {
+                  features[filterName].push(id);
+                  setSelectedFeatures(features);
+                }
+              }}
+              removeItem={(id) => {
+                let features = selectedFeatures;
+                const indexOf = features[filterName].findIndex((item) => item === id);
+                features[filterName].splice(indexOf, 1);
+                setSelectedFeatures(features);
+              }}
+              clearItems={() => {
+                let features = selectedFeatures;
+                features[filterName] = [];
+                setSelectedFeatures(features);
+              }}
+            />
+          );
+        })}
     </section>
   );
 };
