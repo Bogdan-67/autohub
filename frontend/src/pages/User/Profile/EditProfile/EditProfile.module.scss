@@ -58,3 +58,42 @@
     min-width: 70%;
   }
 }
+
+.btn {
+  color: $text-clr;
+  background: transparent;
+  border-radius: 2px;
+  border: 1px solid $text-clr;
+  text-transform: uppercase;
+
+  &_logout {
+    width: 112px;
+    &:hover {
+      border-color: $warn-clr;
+      color: $warn-clr;
+      box-shadow: inset 0 0 10px rgba($color: $warn-clr, $alpha: 0.2);
+    }
+  }
+  &:hover {
+    transition: all 0.2s ease;
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &_save {
+    width: 125px;
+    &:hover {
+      transition: all 0.2s ease;
+      border-color: $success-color;
+      color: $success-color;
+      box-shadow: inset 0 0 10px rgba($color: $success-color, $alpha: 0.2);
+    }
+  }
+
+  &__icon {
+    font-size: 18px;
+    margin-left: 5px;
+  }
+}

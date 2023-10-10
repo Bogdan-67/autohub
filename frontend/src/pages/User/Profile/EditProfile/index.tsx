@@ -8,6 +8,7 @@ import ProfileLayout from '../ProfileLayout/ProfileLayout';
 import ProfileCard from '../../../../components/common/ProfileCard';
 import styles from './EditProfile.module.scss';
 import classNames from 'classnames';
+import { IoLogOutOutline } from 'react-icons/io5';
 
 const labels = {
   name: { label: 'Имя', type: 'text' },
@@ -23,13 +24,22 @@ export const Profile: React.FC = () => {
   const user = useAppSelector(SelectUser);
   const dispatch = useAppDispatch();
   const status = useAppSelector(SelectAuthStatus);
+
+  const handleLogout = () => {
+    if (window.confirm('Выйти из аккаута?')) dispatch(logoutAccount());
+  };
+
   return (
     <ProfileLayout>
       <ProfileCard>
         <div className={styles.topbar}>
           <h1 className={styles.topbar__title}>Профиль пользователя</h1>
-          <Button loading={status === Status.LOADING} onClick={() => dispatch(logoutAccount())}>
-            Выйти
+          <Button
+            className={classNames(styles.btn, styles.btn_logout)}
+            loading={status === Status.LOADING}
+            spinnerColor='#000'
+            onClick={() => handleLogout()}>
+            Выйти <IoLogOutOutline className={styles.btn__icon} />
           </Button>
         </div>
         <form className={styles.form}>
@@ -55,7 +65,11 @@ export const Profile: React.FC = () => {
               <input className={styles.list__input} type={'password'} />
             </li>
           </ul>
-          <Button style={{ marginLeft: 'auto' }} type='submit'>
+          <Button
+            className={classNames(styles.btn, styles.btn_save)}
+            style={{ marginLeft: 'auto' }}
+            spinnerColor='#000'
+            type='submit'>
             Сохранить
           </Button>
         </form>
