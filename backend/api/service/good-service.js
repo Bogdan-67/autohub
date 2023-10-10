@@ -4,13 +4,30 @@ const path = require('path');
 const ApiError = require('../exceptions/api-error');
 
 class GoodService {
-  async getGoods() {
-    const goods = await db.query(`SELECT * FROM goods`);
-    return goods.rows;
+  async getGoods({ category_id, filters }) {
+    filters = filters.split(';');
+    if (!filters || filters.length === 0) {
+      return this.getGoodsByCategory(category_id);
+    } else {
+      const placeholders = filters.map((_, index) => `$${index + 1}`).join(', ');
+      const goods = await db.query(
+        `SELECT DISTINCT * FROM goods RIGHT JOIN good_categories ON good_categories.good_id=goods.id_good INNER JOIN good_features ON goods.id_good = good_features.good_id WHERE id_feature IN (${placeholders}) AND category_id = $${placeholders.length}`,
+        [...filters, category_id],
+      );
+      return goods.rows;
+    }
   }
   async getGoodsByCategory(category_id) {
-    const goods = await db.query(`SELECT * FROM goods WHERE category_id = $1`, [category_id]);
-    return goods.rows;
+    if (!category_id) {
+      const goods = await db.query(`SELECT * FROM goods`);
+      return goods.rows;
+    } else {
+      const goods = await db.query(
+        `SELECT DISTINCT * FROM goods RIGHT JOIN good_categories ON good_categories.good_id=goods.id_good WHERE category_id = $1`,
+        [category_id],
+      );
+      return goods.rows;
+    }
   }
   async getBrands({ category_id }) {
     const brandsFromDb = await db.query(`SELECT * FROM brands`);
