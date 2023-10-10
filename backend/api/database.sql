@@ -67,6 +67,14 @@ CREATE TABLE good_features(
     description VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE good_categories(
+    id_good_category SERIAL PRIMARY KEY,
+    good_id INTEGER NOT NULL,
+    FOREIGN KEY (good_id) REFERENCES goods(id_good) ON DELETE CASCADE,
+    category_id INTEGER NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES categories(id_category) ON DELETE CASCADE
+);
+
 CREATE TABLE cart_goods(
     id_cart_goods SERIAL PRIMARY KEY,
     count INTEGER NOT NULL DEFAULT 1,
