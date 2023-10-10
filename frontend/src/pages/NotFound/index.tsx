@@ -17,7 +17,7 @@ export const NotFound: React.FC<Props> = ({ link }) => {
       <div className={styles.notFound__buttons}>
         {window.history.length > 1 && <Button onClick={() => navigate(-1)}>← &nbsp; Назад</Button>}
         <Link className={styles.notFound__button} to={link ? link : '/'}>
-          <Button>
+          <Button className={styles.notFound__button_home}>
             <AiOutlineHome className={styles.notFound__button__icon} /> &nbsp; На главную
           </Button>
         </Link>

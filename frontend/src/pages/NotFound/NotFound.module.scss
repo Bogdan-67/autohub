@@ -1,3 +1,5 @@
+@import '../../scss/vars';
+
 .notFound {
   display: flex;
   flex-direction: column;
@@ -24,6 +26,10 @@
   }
 
   &__button {
+    &_home {
+      background: $main-clr;
+    }
+
     &__icon {
       font-size: 18px;
     }
