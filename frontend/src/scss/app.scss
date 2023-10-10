@@ -57,6 +57,7 @@ input {
   z-index: 2;
   margin: 0;
   display: flex;
+  color: $text-wh-clr;
 
   & .path {
     stroke: $text-wh-clr;
