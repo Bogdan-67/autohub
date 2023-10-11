@@ -26,7 +26,7 @@ export const Profile: React.FC = () => {
   const status = useAppSelector(SelectAuthStatus);
 
   const handleLogout = () => {
-    if (window.confirm('Выйти из аккаута?')) dispatch(logoutAccount());
+    if (window.confirm('Выйти из аккаунта?')) dispatch(logoutAccount());
   };
 
   return (

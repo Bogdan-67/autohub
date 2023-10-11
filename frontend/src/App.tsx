@@ -37,21 +37,15 @@ function App() {
   return (
     <>
       <Routes location={location} key={location.pathname}>
-        <Route path='/admin' element={<AdminLayout />}>
-          <Route
-            path='/admin'
-            element={
-              <RequireAdmin redirectTo={'/'}>
-                <AdminHome />
-              </RequireAdmin>
-            }></Route>
-          <Route
-            path='/admin/main-slider'
-            element={
-              <RequireAdmin redirectTo={'/'}>
-                <AdminMainSlider />
-              </RequireAdmin>
-            }></Route>
+        <Route
+          path='/admin'
+          element={
+            <RequireAdmin redirectTo={'/'}>
+              <AdminLayout />
+            </RequireAdmin>
+          }>
+          <Route path='/admin' element={<AdminHome />}></Route>
+          <Route path='/admin/main-slider' element={<AdminMainSlider />}></Route>
           <Route path='*' element={<NotFound link='/admin' />}></Route>
         </Route>
         <Route path='/' element={<MainLayout />}>
