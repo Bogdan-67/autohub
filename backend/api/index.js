@@ -10,6 +10,7 @@ const authRouter = require('./routes/auth.routes');
 const roleRouter = require('./routes/role.routes');
 const sliderRouter = require('./routes/slider.routes');
 const goodRouter = require('./routes/good.routes');
+const categoriesRouter = require('./routes/categories.routes');
 const errorMiddleware = require('./middlewares/error-middleware');
 
 const PORT = process.env.PORT || 5000;
@@ -32,6 +33,7 @@ app.use('/', authRouter);
 app.use('/', roleRouter);
 app.use('/', sliderRouter);
 app.use('/', goodRouter);
+app.use('/', categoriesRouter);
 app.use(errorMiddleware);
 
 const start = async () => {
