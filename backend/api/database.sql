@@ -41,8 +41,7 @@ CREATE TABLE brands(
 CREATE TABLE categories(
     id_category SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    parent INTEGER,
-    img VARCHAR(255)
+    parent INTEGER
 );
 
 CREATE TABLE goods(
