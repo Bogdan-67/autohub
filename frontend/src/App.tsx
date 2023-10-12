@@ -1,11 +1,9 @@
 import React from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import './scss/app.scss';
+import './scss/admin.scss';
 
 import NotFound from './pages/NotFound';
-import Header from './components/Headers/Main';
-import Footer from './components/Footer';
-
 import Profile from './pages/User/Profile/EditProfile';
 import Main from './pages/User/Main';
 import Catalog from './pages/User/Catalog';
@@ -22,6 +20,7 @@ import AdminHome from './pages/Admin/Home';
 import AdminMainSlider from './pages/Admin/MainSlider';
 import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
+import CategoriesAdmin from './pages/Admin/Categories';
 
 function App() {
   const location = useLocation();
@@ -45,7 +44,8 @@ function App() {
             </RequireAdmin>
           }>
           <Route path='/admin' element={<AdminHome />}></Route>
-          <Route path='/admin/main-slider' element={<AdminMainSlider />}></Route>
+          <Route path='/admin/sliders/main-slider' element={<AdminMainSlider />}></Route>
+          <Route path='/admin/categories' element={<CategoriesAdmin />}></Route>
           <Route path='*' element={<NotFound link='/admin' />}></Route>
         </Route>
         <Route path='/' element={<MainLayout />}>
