@@ -1,0 +1,21 @@
+@import './vars';
+
+.admin-title {
+  font-size: 27px;
+  font-weight: 600;
+  color: $text-clr;
+  margin-bottom: 30px;
+}
+
+.__control {
+  border-radius: $input-brad !important;
+  padding: 7px 9px;
+}
+
+.__menu {
+  border-radius: $input-brad !important;
+}
+
+.__indicator {
+  cursor: pointer;
+}
