@@ -8,7 +8,7 @@ import { SelectAuthStatus, loginAccount } from '../../../redux/slices/authSlice'
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { connect } from 'react-redux';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
-import { Status } from '../../../models/Status';
+import { Status } from '../../../models/Status.enum';
 import { useAppSelector } from '../../../hooks/redux';
 import Button from '../../common/Button';
 

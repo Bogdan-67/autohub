@@ -6,7 +6,7 @@ import axios, { AxiosResponse } from 'axios';
 import { IUser } from '../../models/IUser';
 import { API_URL } from '../../http';
 import UserService from '../../services/UserService';
-import { Status } from '../../models/Status';
+import { Status } from '../../models/Status.enum';
 
 export type LoginParams = {
   login: string;

@@ -12,7 +12,7 @@ import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useAppSelector } from '../../../hooks/redux';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
-import { Status } from '../../../models/Status';
+import { Status } from '../../../models/Status.enum';
 import Button from '../../common/Button';
 
 export const phoneNumberMask = [

@@ -2,7 +2,7 @@ import React from 'react';
 import { useAppDispatch } from '../../../../redux/store';
 import { useAppSelector } from '../../../../hooks/redux';
 import { SelectAuthStatus, SelectUser, logoutAccount } from '../../../../redux/slices/authSlice';
-import { Status } from '../../../../models/Status';
+import { Status } from '../../../../models/Status.enum';
 import Button from '../../../../components/common/Button';
 import ProfileLayout from '../ProfileLayout/ProfileLayout';
 import ProfileCard from '../../../../components/common/ProfileCard';
