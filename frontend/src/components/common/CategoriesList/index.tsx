@@ -14,6 +14,8 @@ import {
 } from '../../../redux/slices/categoriesSlice';
 import { Status } from '../../../models/Status.enum';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import { BsPencil, BsPlus, BsTrash } from 'react-icons/bs';
+import Button from '../Button';
 
 type Props = {};
 
@@ -30,16 +32,37 @@ const Category: FC<ICategory> = ({ id_category, name, parent }) => {
 
   return (
     <li key={id_category} className={styles.category}>
-      <p
-        className={classNames(styles.category__title, {
+      <div
+        className={classNames(styles.category__head, {
           [styles.active]: category === id_category,
         })}
         onClick={() => handleClick()}>
         {categories?.filter((item: ICategory) => item.parent === id_category).length !== 0 && (
-          <RxTriangleRight className={classNames({ [styles.rotated]: isOpen })} />
+          <RxTriangleRight
+            className={classNames(styles.category__arrow, { [styles.rotated]: isOpen })}
+          />
         )}
-        {name}
-      </p>
+        <p className={styles.category__title}>{name}</p>
+        {category === id_category && (
+          <div className={styles.category__buttons}>
+            <Button
+              title='Создать дочернюю категорию'
+              className={classNames(styles.category__btn, styles.category__btn_add)}>
+              <BsPlus />
+            </Button>
+            <Button
+              title='Редактировать категорию'
+              className={classNames(styles.category__btn, styles.category__btn_edit)}>
+              <BsPencil />
+            </Button>
+            <Button
+              title='Удалить категорию'
+              className={classNames(styles.category__btn, styles.category__btn_delete)}>
+              <BsTrash />
+            </Button>
+          </div>
+        )}
+      </div>
       {isOpen && <Subcategory parent={id_category} />}
     </li>
   );
@@ -63,8 +86,8 @@ const Subcategory: FC<{ parent: number }> = ({ parent }) => {
       {subcategories.map((subcategory) => {
         return (
           <li key={subcategory.id_category} className={styles.subcategory}>
-            <p
-              className={classNames(styles.subcategory__title, {
+            <div
+              className={classNames(styles.subcategory__head, {
                 [styles.active]: category === subcategory.id_category,
               })}
               onClick={() => handleClick(subcategory.id_category)}>
@@ -76,8 +99,27 @@ const Subcategory: FC<{ parent: number }> = ({ parent }) => {
                   })}
                 />
               )}
-              {subcategory.name}
-            </p>
+              <p className={styles.subcategory__title}>{subcategory.name}</p>
+              {category === subcategory.id_category && (
+                <div className={styles.subcategory__buttons}>
+                  <Button
+                    title='Создать дочернюю категорию'
+                    className={classNames(styles.subcategory__btn, styles.subcategory__btn_add)}>
+                    <BsPlus />
+                  </Button>
+                  <Button
+                    title='Редактировать категорию'
+                    className={classNames(styles.subcategory__btn, styles.subcategory__btn_edit)}>
+                    <BsPencil />
+                  </Button>
+                  <Button
+                    title='Удалить категорию'
+                    className={classNames(styles.subcategory__btn, styles.subcategory__btn_delete)}>
+                    <BsTrash />
+                  </Button>
+                </div>
+              )}
+            </div>
             {subcategory.id_category === openedCategory && (
               <Subcategory parent={subcategory.id_category} />
             )}
@@ -98,23 +140,33 @@ const CategoriesList = (props: Props) => {
   }, []);
 
   return (
-    <ul className={styles.categories__list}>
+    <>
       {status === Status.LOADING ? (
-        <LoadingSpinner color='#C0C0C0' size={40} />
+        <div className={styles.noCategories}>
+          <LoadingSpinner color='#000' size={40} />
+        </div>
       ) : status === Status.ERROR ? (
-        <div className={styles.noCategories}>{error} :(</div>
+        <div className={styles.noCategories}>
+          <p>
+            {error} {':('}
+          </p>
+        </div>
       ) : !categories || categories.length === 0 ? (
-        <div className={styles.noCategories}>Пока еще не создано ни одной категории</div>
+        <div className={styles.noCategories}>
+          <p>Пока еще не создано ни одной категории</p>
+        </div>
       ) : (
         <>
-          {categories
-            ?.filter((category: ICategory) => category.parent === null)
-            .map((category: ICategory, index) => (
-              <Category key={index} {...category} />
-            ))}
+          <ul className={styles.categories__list}>
+            {categories
+              ?.filter((category: ICategory) => category.parent === null)
+              .map((category: ICategory, index) => (
+                <Category key={index} {...category} />
+              ))}
+          </ul>
         </>
       )}
-    </ul>
+    </>
   );
 };
 
