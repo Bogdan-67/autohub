@@ -9,8 +9,11 @@ $input-h-clr: #fff; // Цвет input при наведении
 $border-clr: #ececec; // Цвет тонкой рамки
 $thin-border: 2px solid $border-clr; // Тонкая серая рамка
 $dark-clr: #171717; // "Черный" цвет
-$warn-clr: rgb(206, 0, 0); // Цвет ошибки
-$success-color: rgb(0, 160, 0); // Цвет "успешно"
+$warn-clr: rgb(190, 68, 68); // Цвет ошибки
+$edit-clr: rgb(59, 124, 221); // Цвет редактирования
+$success-clr: rgb(82, 176, 49); // Цвет "успешно"
+$grey-light-clr: rgb(228, 228, 228); // Серый светлый цвет
+$grey-dark-clr: rgb(132, 132, 132); // Серый темный цвет
 $transition: all 0.4s ease; // Анимация по умолчанию
 $input-brad: 10px; // Радиус импутов
 //$variable1 = Максимальное значение шрифта, $variable2 = минимальное значение шрифта
