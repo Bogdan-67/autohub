@@ -86,9 +86,9 @@
     width: 125px;
     &:hover {
       transition: all 0.2s ease;
-      border-color: $success-color;
-      color: $success-color;
-      box-shadow: inset 0 0 10px rgba($color: $success-color, $alpha: 0.2);
+      border-color: $success-clr;
+      color: $success-clr;
+      box-shadow: inset 0 0 10px rgba($color: $success-clr, $alpha: 0.2);
     }
   }
 
