@@ -11,7 +11,8 @@ body {
   flex-direction: column;
 }
 
-input {
+input,
+textarea {
   border-radius: $input-brad;
   border: none;
   outline: none;
@@ -24,7 +25,7 @@ input {
   display: flex;
   justify-content: center;
   text-align: center;
-  justify-content: center;
+  align-items: center;
   background-color: $dop-clr;
   border-radius: 10px;
   padding: 13px 15px;
@@ -39,16 +40,59 @@ input {
 
   &:hover {
     transition: box-shadow 0.2s ease;
-    box-shadow: inset 0 0 20px 0 #00000033;
+    box-shadow: inset 0 0 20px 0 #00000013;
   }
 
   &:focus {
-    box-shadow: inset 0 0 20px 0 #00000085;
+    box-shadow: inset 0 0 20px 0 #00000033;
   }
 
   &[disabled] {
     opacity: 0.5;
     pointer-events: none;
+  }
+}
+
+.border-input {
+  border: 2px solid $input-clr;
+  border-radius: 2px;
+  color: $text-clr;
+
+  &:focus {
+    transition: $transition;
+    border-color: #777777;
+  }
+}
+
+.border-btn {
+  color: $text-clr;
+  background: transparent;
+  border-radius: 2px;
+  border: 1px solid $text-clr;
+  text-transform: uppercase;
+
+  &_warn {
+    &:hover {
+      border-color: $warn-clr;
+      color: $warn-clr;
+      box-shadow: inset 0 0 10px rgba($color: $warn-clr, $alpha: 0.2);
+    }
+  }
+  &:hover {
+    transition: all 0.2s ease;
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &_save {
+    &:hover {
+      transition: all 0.2s ease;
+      border-color: $success-clr;
+      color: $success-clr;
+      box-shadow: inset 0 0 10px rgba($color: $success-clr, $alpha: 0.2);
+    }
   }
 }
 
