@@ -9,6 +9,7 @@ import ProfileCard from '../../../../components/common/ProfileCard';
 import styles from './EditProfile.module.scss';
 import classNames from 'classnames';
 import { IoLogOutOutline } from 'react-icons/io5';
+import EditInput from '../../../../components/common/EditInput';
 
 const labels = {
   name: { label: 'Имя', type: 'text' },
@@ -45,25 +46,26 @@ export const Profile: React.FC = () => {
         <form className={styles.form}>
           <ul className={styles.list}>
             {Object.entries(labels).map((prop) => (
-              <li className={styles.list__item}>
-                <p className={styles.list__label} title={prop[1].label}>
-                  {prop[1].label}
-                </p>
-                <input className={styles.list__input} type={prop[1].type} value={user[prop[0]]} />
-              </li>
+              <EditInput
+                title={prop[1].label}
+                type={prop[1].type}
+                value={user[prop[0]]}
+                onChange={() => {}}
+              />
             ))}
-            <li className={classNames(styles.list__item, styles.list__item_password)}>
-              <p className={styles.list__label} title={'Новый пароль'}>
-                Новый пароль
-              </p>
-              <input className={styles.list__input} type={'password'} />
-            </li>
-            <li className={classNames(styles.list__item)}>
-              <p className={styles.list__label} title={'Подтверждение нового пароля'}>
-                Подтверждение нового пароля
-              </p>
-              <input className={styles.list__input} type={'password'} />
-            </li>
+            <EditInput
+              boxClass={styles.list__item_password}
+              title='Новый пароль'
+              type='password'
+              value={''}
+              onChange={() => {}}
+            />
+            <EditInput
+              title='Подтверждение нового пароля'
+              type='password'
+              value={''}
+              onChange={() => {}}
+            />
           </ul>
           <Button
             className={classNames(styles.btn, styles.btn_save)}
