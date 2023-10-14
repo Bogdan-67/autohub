@@ -50,7 +50,9 @@ const CategoriesAdmin = (props: Props) => {
     <>
       <h1 className='admin-title'>Категории товаров</h1>
       <CategoriesList />
-      <Button onClick={() => setIsCreateOpen(true)}>Создать</Button>
+      <Button className={styles.createBtn} onClick={() => setIsCreateOpen(true)}>
+        Создать
+      </Button>
       <Modal isActive={isCreateOpen} setIsActive={setIsCreateOpen}>
         <div className={styles.create}>
           <h2 className={styles.create__title}>Создание категории</h2>
