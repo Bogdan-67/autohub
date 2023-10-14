@@ -72,4 +72,13 @@ export const SidebarItems = [
     },
     parent: 1,
   },
+  {
+    id: 8,
+    title: 'Создание',
+    link: '/create',
+    icon: () => {
+      return <BsArrowReturnRight />;
+    },
+    parent: 4,
+  },
 ];

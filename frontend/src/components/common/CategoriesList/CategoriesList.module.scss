@@ -1,19 +1,97 @@
+@import '../../../scss/vars';
+
 .category {
   margin-top: 10px;
   font-size: 17px;
   font-weight: 600;
   line-height: 20px;
+  width: 100%;
   cursor: pointer;
 
-  &__title {
+  &__head {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    position: relative;
+  }
+
+  &__arrow {
+    position: absolute;
+    left: -20px;
+  }
+
+  &__title {
+    color: inherit;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__btn {
+    border-radius: 50%;
+    padding: 7px;
+
+    &_add {
+      background: $success-clr;
+    }
+
+    &_edit {
+      background: $edit-clr;
+    }
+
+    &_delete {
+      background: $warn-clr;
+    }
   }
 }
 
 .subcategory {
   margin-top: 10px;
   cursor: pointer;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    position: relative;
+  }
+
+  &__arrow {
+    position: absolute;
+    left: -20px;
+  }
+
+  &__title {
+    color: inherit;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__btn {
+    border-radius: 50%;
+    padding: 7px;
+
+    &_add {
+      background: $success-clr;
+    }
+
+    &_edit {
+      background: $edit-clr;
+    }
+
+    &_delete {
+      background: $warn-clr;
+    }
+  }
 }
 
 .subcategories {
@@ -34,14 +112,28 @@
   &__list {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
+    align-items: start;
     flex: 1 1 auto;
+    width: 80%;
+    padding: 40px 50px;
+    border: $thin-border;
   }
 }
 
 .noCategories {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 auto;
+  border: $thin-border;
+  width: 80%;
   font-size: 20px;
   font-weight: 700;
-  opacity: 0.3;
   padding: 50px;
+
+  * {
+    opacity: 0.3;
+  }
 }
