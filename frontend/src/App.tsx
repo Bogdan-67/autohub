@@ -21,6 +21,8 @@ import AdminMainSlider from './pages/Admin/MainSlider';
 import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
 import CategoriesAdmin from './pages/Admin/Categories';
+import CreateGood from './pages/Admin/Goods/Create';
+import GoodsAdmin from './pages/Admin/Goods';
 
 function App() {
   const location = useLocation();
@@ -43,26 +45,30 @@ function App() {
               <AdminLayout />
             </RequireAdmin>
           }>
-          <Route path='/admin' element={<AdminHome />}></Route>
-          <Route path='/admin/sliders/main-slider' element={<AdminMainSlider />}></Route>
-          <Route path='/admin/categories' element={<CategoriesAdmin />}></Route>
+          <Route path='' element={<AdminHome />}></Route>
+          <Route path='sliders/main-slider' element={<AdminMainSlider />}></Route>
+          <Route path='categories' element={<CategoriesAdmin />}></Route>
+          <Route path='goods'>
+            <Route path='' element={<GoodsAdmin />}></Route>
+            <Route path='create' element={<CreateGood />}></Route>
+          </Route>
           <Route path='*' element={<NotFound link='/admin' />}></Route>
         </Route>
         <Route path='/' element={<MainLayout />}>
-          <Route path='/' element={<Main />}></Route>
-          <Route path='/catalog' element={<Catalog />}></Route>
-          <Route path='/about' element={<About />}></Route>
-          <Route path='/brands' element={<Brands />}></Route>
-          <Route path='/contacts' element={<Contacts />}></Route>
-          <Route path='/projects' element={<Projects />}></Route>
+          <Route path='' element={<Main />}></Route>
+          <Route path='catalog' element={<Catalog />}></Route>
+          <Route path='about' element={<About />}></Route>
+          <Route path='brands' element={<Brands />}></Route>
+          <Route path='contacts' element={<Contacts />}></Route>
+          <Route path='projects' element={<Projects />}></Route>
           <Route
-            path='/profile'
+            path='profile'
             element={
               <RequireAuth redirectTo={'/'}>
                 <Profile />
               </RequireAuth>
             }></Route>
-          <Route path='/cart' element={<Cart />}></Route>
+          <Route path='cart' element={<Cart />}></Route>
           <Route path='*' element={<NotFound />}></Route>
         </Route>
       </Routes>
