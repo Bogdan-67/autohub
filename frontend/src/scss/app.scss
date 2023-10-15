@@ -53,14 +53,18 @@ textarea {
   }
 }
 
-.border-input {
-  border: 2px solid $input-clr;
-  border-radius: 2px;
-  color: $text-clr;
+:global {
+  .border-input,
+  %border-input {
+    border: 2px solid $input-clr;
+    border-radius: 2px;
+    color: $text-clr;
 
-  &:focus {
-    transition: $transition;
-    border-color: #777777;
+    &:focus,
+    %border-input--focus {
+      transition: $transition;
+      border-color: #777777;
+    }
   }
 }
 

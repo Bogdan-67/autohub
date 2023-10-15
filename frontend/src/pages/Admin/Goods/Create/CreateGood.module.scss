@@ -1,4 +1,5 @@
 @import '../../../../scss/vars';
+@import '../../../../scss/app.scss';
 
 .inputs {
   display: flex;
@@ -13,6 +14,23 @@
     text-transform: uppercase;
     color: $text-clr;
     font-weight: 600;
+  }
+
+  &__categories {
+    :global {
+      .__control {
+        @extend .border-input;
+        box-shadow: none;
+        &:hover,
+        &:focus {
+          border-color: #777777;
+        }
+      }
+
+      .__contrrol--is-focused {
+        border-color: #777777;
+      }
+    }
   }
 }
 

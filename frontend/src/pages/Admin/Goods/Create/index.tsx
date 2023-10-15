@@ -7,6 +7,7 @@ import Button from '../../../../components/common/Button';
 import { BsPlusLg, BsXLg } from 'react-icons/bs';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
+import CategoriesSelectBar from '../../../../components/common/CategoriesSelectBar';
 
 type Props = {};
 
@@ -93,6 +94,13 @@ const CreateGood = (props: Props) => {
             onChange={(value) => setGood((prev) => ({ ...prev, [prop[0]]: value }))}
           />
         ))}
+        <EditInput title='Категория'>
+          <CategoriesSelectBar
+            className={styles.inputs__categories}
+            categoryId={good.category_id}
+            setCategoryId={(id) => setGood((prev) => ({ ...prev, category_id: id }))}
+          />
+        </EditInput>
         <div className={styles.features}>
           <p className={styles.inputs__title}>Характеристики</p>
           {good.features && (
