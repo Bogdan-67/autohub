@@ -48,9 +48,7 @@ CREATE TABLE goods(
     id_good SERIAL PRIMARY KEY,
     good_name VARCHAR(255) NOT NULL,
     article VARCHAR(255) NOT NULL,
-    category_id INTEGER NOT NULL,
-    FOREIGN KEY (category_id) REFERENCES categories(id_category) ON DELETE CASCADE,
-    brand_id INTEGER NOT NULL,
+    brand_id INTEGER,
     FOREIGN KEY (brand_id) REFERENCES brands(id_brand) ON DELETE CASCADE,
     price REAL,
     img VARCHAR(255),
@@ -73,6 +71,13 @@ CREATE TABLE good_categories(
     category_id INTEGER NOT NULL,
     FOREIGN KEY (category_id) REFERENCES categories(id_category) ON DELETE CASCADE
 );
+
+CREATE TABLE good_images(
+    id_image SERIAL PRIMARY KEY,
+    filename VARCHAR(255),
+    good_id INTEGER NOT NULL,
+    FOREIGN KEY (good_id) REFERENCES goods(id_good) ON DELETE CASCADE
+)
 
 CREATE TABLE cart_goods(
     id_cart_goods SERIAL PRIMARY KEY,
