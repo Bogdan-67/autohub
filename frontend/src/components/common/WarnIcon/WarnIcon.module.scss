@@ -1,0 +1,22 @@
+@import '../../../scss/vars';
+
+.warn {
+  position: relative;
+  height: 20px;
+
+  &__icon {
+    color: $warn-clr;
+    font-size: 20px;
+  }
+
+  &__title {
+    position: absolute;
+    bottom: 100%;
+    left: 100%;
+    box-shadow: 0 0 3px rgba($color: $warn-clr, $alpha: 0.7);
+    border-radius: 3px;
+    padding: 7px 10px;
+    text-transform: none;
+    font-weight: 500;
+  }
+}
