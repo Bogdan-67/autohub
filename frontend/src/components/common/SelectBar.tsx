@@ -37,7 +37,7 @@ const SelectBar: FC<Props> = ({
     <>
       <Select
         className={className}
-        classNamePrefix={' '}
+        classNamePrefix={'select'}
         placeholder={placeholder}
         noOptionsMessage={() => (emptyMessage ? emptyMessage : 'Нет данных')}
         isDisabled={disabled || false}
