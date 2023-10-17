@@ -1,64 +1,70 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
-import Input from '../../../../components/common/Input';
+import Input from '../../../../components/common/BorderInput';
 import styles from './CreateGood.module.scss';
 import EditInput from '../../../../components/common/EditInput';
 import { IGood } from '../../../../models/IGood';
 import Button from '../../../../components/common/Button';
 import { BsPlusLg, BsXLg } from 'react-icons/bs';
 import classNames from 'classnames';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import CategoriesSelectBar from '../../../../components/common/CategoriesSelectBar';
+import { yupResolver } from '@hookform/resolvers/yup';
+import schema, { numberRegExp } from '../../../../models/validation/CreateGoodSchema';
+import GoodService from '../../../../services/GoodService';
+import WarnIcon from '../../../../components/common/WarnIcon';
 
-type Props = {};
-
-const inputs = {
-  good_name: { label: 'Название', type: 'text' },
-  article: { label: 'Артикул', type: 'text' },
-  price: { label: 'Цена', type: 'text' },
-  storage: { label: 'Количество на складе', type: 'number' },
-  description: { label: 'Описание', type: 'textarea' },
-};
-
-const CreateGood = (props: Props) => {
+const CreateGood = (props) => {
   const {
     handleSubmit,
-    register,
+    setValue,
+    getValues,
+    control,
+    reset,
     formState: { errors },
-  } = useForm<Partial<IGood>>();
-  const [good, setGood] = useState<Partial<IGood>>({ features: [] });
-  const [images, setImages] = useState([]);
+  } = useForm<Partial<IGood>>({
+    defaultValues: {
+      price: 0,
+      storage: 0,
+      good_name: '',
+      article: '',
+      description: '',
+      category_id: null,
+      photos: [],
+      features: [],
+    },
+    resolver: yupResolver(schema),
+  });
+  const [imageUrls, setImageUrls] = useState([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const addButtonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    console.log(good);
-  }, [good]);
-
-  useEffect(() => {
-    console.log(images);
-  }, [images]);
+  const [features, setFeatures] = useState(getValues('features'));
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<string>(null);
 
   const addFeature = () => {
-    setGood((prev) => ({
-      ...prev,
-      features: [...prev.features, { title: '', description: '', id_feature: Date.now() }],
-    }));
+    const currentFeatures = getValues('features');
+
+    currentFeatures.push({ title: '', description: '', id_feature: Date.now() });
+
+    setFeatures(currentFeatures);
+
+    setValue('features', currentFeatures);
     addButtonRef.current.blur();
   };
 
-  const changeFeature = (key: string, value: string, id: number) => {
-    setGood((prev) => ({
-      ...prev,
-      features: prev.features.map((f) => (f.id_feature === id ? { ...f, [key]: value } : f)),
-    }));
-  };
-
   const removeFeature = (id: number) => {
-    setGood({ ...good, features: good.features.filter((f) => f.id_feature !== id) });
+    const currentFeatures = getValues('features');
+
+    setFeatures((prev) => prev.filter((feature) => feature.id_feature !== id));
+
+    setValue(
+      'features',
+      currentFeatures.filter((feature) => feature.id_feature !== id),
+    );
   };
 
-  const handleImageChange = (e) => {
-    const selectedFiles = Array.from(e.target.files);
+  const handleImageChange = (files: FileList) => {
+    const selectedFiles = Array.from(files);
 
     if (selectedFiles.length > 0) {
       const imagePromises = selectedFiles.map((file: File) => {
@@ -70,61 +76,203 @@ const CreateGood = (props: Props) => {
       });
 
       Promise.all(imagePromises).then((imageDataArray) => {
-        setImages((prev) => [...prev, ...imageDataArray]);
+        setImageUrls((prev) => [...prev, ...imageDataArray]);
       });
-    } else {
-      setImages([]);
     }
+  };
+
+  const deletePhoto = (file: File) => {
+    const currentPhotos: File[] = getValues('photos') as File[];
+    console.log(currentPhotos);
+
+    setValue(
+      'photos',
+      currentPhotos.filter((photo: File) => photo !== file),
+    );
   };
 
   const handleAddImageClick = () => {
     fileInputRef.current.click();
   };
 
+  const submit: SubmitHandler<Partial<IGood>> = async (data) => {
+    setIsLoading(true);
+    console.log(data);
+    const formData = new FormData();
+
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        const value = data[key];
+
+        if (Array.isArray(value)) {
+          value.forEach((item, index) => {
+            if (item instanceof File) {
+              formData.append(`${key}[]`, item);
+            } else {
+              formData.append(`${key}[]`, JSON.stringify(item));
+            }
+          });
+        } else if (value instanceof File) {
+          formData.append(key, value);
+        } else {
+          formData.append(key, String(value));
+        }
+      }
+    }
+    await GoodService.createGood(formData)
+      .then((_) => {
+        reset();
+        setFeatures([]);
+        setIsError(null);
+      })
+      .catch((e) => setIsError(e.response ? e.response.data.message : 'Ошибка сервера'))
+      .finally(() => setIsLoading(false));
+  };
+
   return (
-    <>
+    <form className={styles.form} onSubmit={handleSubmit(submit)}>
       <h1 className='admin-title'>Создание товара</h1>
       <div className={styles.inputs}>
-        {Object.entries(inputs).map((prop) => (
-          <EditInput
-            key={prop[0]}
-            title={prop[1].label}
-            type={prop[1].type}
-            value={good[prop[0]]}
-            onChange={(value) => setGood((prev) => ({ ...prev, [prop[0]]: value }))}
-          />
-        ))}
-        <EditInput title='Категория'>
-          <CategoriesSelectBar
-            className={styles.inputs__categories}
-            categoryId={good.category_id}
-            setCategoryId={(id) => setGood((prev) => ({ ...prev, category_id: id }))}
-          />
-        </EditInput>
+        <Controller
+          name='good_name'
+          control={control}
+          defaultValue=''
+          render={({ field }) => (
+            <EditInput title='Название'>
+              <Input
+                className={classNames('border-input', styles.inputs__input)}
+                aria-invalid={errors.good_name ? true : false}
+                error={errors.good_name ? errors.good_name.message : ''}
+                {...field}
+              />
+            </EditInput>
+          )}
+        />
+        <Controller
+          name='article'
+          control={control}
+          defaultValue=''
+          render={({ field }) => (
+            <EditInput title='Артикул'>
+              <Input
+                className={classNames('border-input', styles.inputs__input)}
+                aria-invalid={errors.article ? true : false}
+                error={errors.article ? errors.article.message : ''}
+                {...field}
+              />
+            </EditInput>
+          )}
+        />
+        <Controller
+          name='price'
+          control={control}
+          render={({ field }) => (
+            <EditInput title='Цена'>
+              <Input
+                className={classNames('border-input', styles.inputs__input)}
+                aria-invalid={errors.price ? true : false}
+                error={errors.price ? errors.price.message : ''}
+                {...field}
+              />
+            </EditInput>
+          )}
+        />
+        <Controller
+          name='storage'
+          control={control}
+          render={({ field }) => (
+            <EditInput title='Количество на складе'>
+              <Input
+                className={classNames('border-input', styles.inputs__input)}
+                aria-invalid={errors.storage ? true : false}
+                error={errors.storage ? errors.storage.message : ''}
+                onChange={(e) => field.onChange(Number(e.target.value))}
+                {...field}
+              />
+            </EditInput>
+          )}
+        />
+        <Controller
+          name='description'
+          control={control}
+          defaultValue=''
+          render={({ field }) => (
+            <EditInput title='Описание'>
+              <textarea
+                className={classNames('border-input', styles.inputs__input)}
+                aria-invalid={errors.description ? true : false}
+                {...field}
+              />
+            </EditInput>
+          )}
+        />
+
+        <Controller
+          name='category_id'
+          control={control}
+          defaultValue={null}
+          render={({ field }) => (
+            <EditInput title='Категория'>
+              <CategoriesSelectBar
+                className={classNames(styles.inputs__categories, {
+                  [styles.inputs__categories_invalid]: !!errors.category_id,
+                })}
+                categoryId={field.value}
+                setCategoryId={(id) => field.onChange(id)}
+              />
+            </EditInput>
+          )}
+        />
+
         <div className={styles.features}>
           <p className={styles.inputs__title}>Характеристики</p>
-          {good.features && (
+          {features && features.length > 0 && (
             <ul className={styles.features__list}>
-              {good?.features.map((feature) => (
-                <li key={feature.id_feature} className={styles.features__item}>
-                  <Input
-                    placeholder='Название'
-                    className={classNames('border-input', styles.features__input)}
-                    type='text'
-                    value={feature.title}
-                    onChange={(e) => changeFeature('title', e.target.value, feature.id_feature)}
+              {features.map((feature, index) => (
+                <li key={index} className={styles.features__item}>
+                  <Controller
+                    name={`features.${index}.title`}
+                    control={control}
+                    defaultValue={feature.title || ''}
+                    render={({ field }) => (
+                      <Input
+                        placeholder='Название'
+                        className={classNames('border-input', styles.features__input)}
+                        type='text'
+                        value={field.value}
+                        onChange={field.onChange}
+                        aria-invalid={
+                          errors.features && errors.features[index] && errors.features[index].title
+                            ? true
+                            : false
+                        }
+                      />
+                    )}
                   />
-                  <Input
-                    placeholder='Описание'
-                    className={classNames('border-input', styles.features__input)}
-                    type='text'
-                    value={feature.description}
-                    onChange={(e) =>
-                      changeFeature('description', e.target.value, feature.id_feature)
-                    }
+                  <Controller
+                    name={`features.${index}.description`}
+                    control={control}
+                    defaultValue={feature.description || ''}
+                    render={({ field }) => (
+                      <Input
+                        placeholder='Описание'
+                        className={classNames('border-input', styles.features__input)}
+                        type='text'
+                        value={field.value}
+                        onChange={field.onChange}
+                        aria-invalid={
+                          errors.features &&
+                          errors.features[index] &&
+                          errors.features[index].description
+                            ? true
+                            : false
+                        }
+                      />
+                    )}
                   />
                   <Button
                     className='border-btn border-btn_warn'
+                    type='button'
                     onClick={() => removeFeature(feature.id_feature)}>
                     Удалить
                   </Button>
@@ -134,6 +282,7 @@ const CreateGood = (props: Props) => {
           )}
           <Button
             ref={addButtonRef}
+            type='button'
             title='Добавить характеристику'
             className={classNames(styles.features__btn, styles.features__btn_add)}
             onClick={() => addFeature()}>
@@ -141,45 +290,75 @@ const CreateGood = (props: Props) => {
           </Button>
         </div>
         <div className={styles.images}>
-          <p className={styles.inputs__title}>Изображения</p>
-          <div className={styles.images__grid}>
-            {images &&
-              images.map((file) => (
-                <div className={styles.images__block}>
+          <p className={styles.inputs__title}>
+            Изображения
+            {errors.photos && (
+              <>
+                &nbsp; <WarnIcon title={errors.photos.message ? errors.photos.message : 'Ошибка'} />
+              </>
+            )}
+          </p>
+          {getValues('photos') && getValues('photos').length > 0 && (
+            <div className={styles.images__grid}>
+              {getValues('photos').map((file, index) => (
+                <div key={index} className={styles.images__block}>
                   <div
                     className={styles.images__img}
                     style={{
-                      backgroundImage: `url(${file})`,
+                      backgroundImage: `url(${URL.createObjectURL(file)})`,
                       backgroundSize: 'contain',
                       backgroundPosition: 'center',
                       backgroundRepeat: 'no-repeat',
                     }}></div>
                   <Button
                     title='Удалить'
-                    onClick={() => setImages((prev) => prev.filter((img) => img !== file))}
+                    type='button'
+                    onClick={() => deletePhoto(file)}
                     className={classNames('border-btn border-btn_warn', styles.images__cross)}>
                     <BsXLg />
                   </Button>
                 </div>
               ))}
-          </div>
+            </div>
+          )}
           <Button
             className={classNames(styles.features__btn, styles.features__btn_add)}
+            title='Добавить изображение'
+            type='button'
             onClick={handleAddImageClick}>
             <BsPlusLg />
           </Button>
-          <input
-            ref={fileInputRef}
-            type='file'
-            accept='image/png, image/jpeg'
-            style={{ display: 'none' }}
-            multiple={true}
-            onChange={(e) => handleImageChange(e)}
+          <Controller
+            name='photos'
+            defaultValue={[]}
+            control={control}
+            render={({ field }) => (
+              <>
+                <input
+                  ref={fileInputRef}
+                  type='file'
+                  accept='image/png, image/jpeg'
+                  multiple
+                  style={{ display: 'none' }}
+                  onChange={(e) => {
+                    field.onChange([...getValues('photos'), ...Array.from(e.target.files)]);
+                    handleImageChange(e.target.files);
+                  }}
+                />
+              </>
+            )}
           />
         </div>
       </div>
-      <Button className='border-btn border-btn_save'>Создать</Button>
-    </>
+      {isError && <div>{isError}</div>}
+      <Button
+        loading={isLoading}
+        spinnerColor='#404040'
+        className={classNames('border-btn border-btn_save', styles.form__saveBtn)}
+        type='submit'>
+        Создать
+      </Button>
+    </form>
   );
 };
 
