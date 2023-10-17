@@ -51,7 +51,6 @@ CREATE TABLE goods(
     brand_id INTEGER,
     FOREIGN KEY (brand_id) REFERENCES brands(id_brand) ON DELETE CASCADE,
     price REAL,
-    img VARCHAR(255),
     description TEXT,
     storage INTEGER NOT NULL DEFAULT 0
 );
