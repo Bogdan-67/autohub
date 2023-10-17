@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Button from '../../../components/common/Button';
 import Modal from '../../../components/common/Modal';
 import CategoriesList from '../../../components/common/CategoriesList';
-import Input from '../../../components/common/Input';
+import Input from '../../../components/common/BorderInput';
 import SelectBar from '../../../components/common/SelectBar';
 import { IOption } from '../../../models/IOption';
 import { useAppSelector } from '../../../hooks/redux';

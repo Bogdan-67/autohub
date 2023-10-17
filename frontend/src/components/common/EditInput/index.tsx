@@ -1,5 +1,5 @@
 import React, { FC, useId } from 'react';
-import Input from '../Input';
+import Input from '../BorderInput';
 import styles from './EditInput.module.scss';
 import classNames from 'classnames';
 
@@ -20,7 +20,9 @@ const EditInput: FC<Props> = ({ title, type, value, boxClass, onChange, children
         {title}
       </label>
       {children ? (
-        <div className={styles.list__input}>{children}</div>
+        <div id={id} className={styles.list__input}>
+          {children}
+        </div>
       ) : type === 'textarea' ? (
         <textarea
           className={classNames('border-input', styles.list__input)}
@@ -31,7 +33,7 @@ const EditInput: FC<Props> = ({ title, type, value, boxClass, onChange, children
           rows={5}></textarea>
       ) : (
         <Input
-          className={classNames('border-input', styles.list__input)}
+          boxClassName={styles.list__input}
           type={type || 'text'}
           value={value}
           id={id}
