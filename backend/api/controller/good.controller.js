@@ -1,4 +1,5 @@
 const goodService = require('../service/good-service');
+const db = require('../db');
 
 class GoodController {
   async getGoods(req, res, next) {
@@ -27,9 +28,16 @@ class GoodController {
   }
   async createGood(req, res, next) {
     try {
-      const good = await goodService.createGood();
+      console.log(req.body, req.files);
+      let photos = null;
+      const features = req.body['features[]'];
+      if (req.files && req.files['photos[]']) {
+        photos = req.files['photos[]'];
+      }
+      const good = await goodService.createGood(req.body, features, photos);
       res.status(200).json(good);
     } catch (e) {
+      await db.query('ROLLBACK');
       next(e);
     }
   }
