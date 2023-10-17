@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
-import Input from '../../../components/common/Input';
+import Input from '../../../components/common/BorderInput';
 import Modal from '../../../components/common/Modal';
 import Button from '../../../components/common/Button';
 import { ISlider } from '../../../models/ISlider';
