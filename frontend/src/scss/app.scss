@@ -59,11 +59,17 @@ textarea {
     border: 2px solid $input-clr;
     border-radius: 2px;
     color: $text-clr;
+    position: relative;
+    transition: $transition;
 
     &:focus,
     %border-input--focus {
       transition: $transition;
       border-color: #777777;
+    }
+
+    &[aria-invalid='true'] {
+      border-color: $not-valid-clr;
     }
   }
 }
