@@ -7,7 +7,7 @@ export interface IGood {
   category_id: number;
   brand_id: number;
   price: number;
-  img: string | File;
+  photos: string[] | File[];
   description: string;
   storage: number;
   features?: Partial<IFeature>[];
