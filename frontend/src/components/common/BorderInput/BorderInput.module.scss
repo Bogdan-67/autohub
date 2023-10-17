@@ -1,0 +1,26 @@
+@import '../../../scss/vars';
+
+.box {
+  position: relative;
+}
+
+.input {
+  position: relative;
+  min-width: 100%;
+}
+
+.error {
+  position: absolute;
+  top: 27%;
+  right: 10px;
+  color: $not-valid-clr;
+  font-size: 12px;
+  font-weight: 600;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: wrap;
+  text-wrap: nowrap;
+  background: #fff;
+  padding: 5px 8px;
+}
