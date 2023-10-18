@@ -81,9 +81,12 @@ const CreateGood = (props) => {
     }
   };
 
-  const deletePhoto = (file: File) => {
+  const deletePhoto = async (file: File) => {
     const currentPhotos: File[] = getValues('photos') as File[];
-    console.log(currentPhotos);
+
+    const imageUrl = await URL.createObjectURL(file);
+
+    setImageUrls((prev) => prev.filter((url) => url !== imageUrl));
 
     setValue(
       'photos',
