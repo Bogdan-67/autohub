@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import CategoriesSelectBar from '../../../../components/common/CategoriesSelectBar';
 import { yupResolver } from '@hookform/resolvers/yup';
-import schema, { numberRegExp } from '../../../../models/validation/CreateGoodSchema';
+import schema from '../../../../models/validation/CreateGoodSchema';
 import GoodService from '../../../../services/GoodService';
 import WarnIcon from '../../../../components/common/WarnIcon';
 
