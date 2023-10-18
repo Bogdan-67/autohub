@@ -23,6 +23,7 @@ import AdminLayout from './layouts/AdminLayout';
 import CategoriesAdmin from './pages/Admin/Categories';
 import CreateGood from './pages/Admin/Goods/Create';
 import GoodsAdmin from './pages/Admin/Goods';
+import BrandsAdmin from './pages/Admin/Brands';
 
 function App() {
   const location = useLocation();
@@ -48,6 +49,7 @@ function App() {
           <Route path='' element={<AdminHome />}></Route>
           <Route path='sliders/main-slider' element={<AdminMainSlider />}></Route>
           <Route path='categories' element={<CategoriesAdmin />}></Route>
+          <Route path='brands' element={<BrandsAdmin />}></Route>
           <Route path='goods'>
             <Route path='' element={<GoodsAdmin />}></Route>
             <Route path='create' element={<CreateGood />}></Route>
