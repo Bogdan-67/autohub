@@ -29,13 +29,16 @@ const BrandsLine = ({ rtl }) => {
       <Slider {...sliderSettings}>
         {brands.map((brand, index) => (
           <Link to={'/brands/' + brand.link} key={index}>
-            <div
-              className={styles.carousel__slide}
-              style={{
-                background: `url("${brand.img}")`,
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center center',
-              }}></div>
+            <div className={styles.carousel__slide}>
+              <div
+                className={styles.carousel__slide__img}
+                style={{
+                  background: `url("${brand.img}")`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center center',
+                  backgroundSize: 'contain',
+                }}></div>
+            </div>
           </Link>
         ))}
       </Slider>

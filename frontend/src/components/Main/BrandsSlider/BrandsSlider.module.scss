@@ -28,12 +28,19 @@
   margin-top: 40px;
 
   &__slide {
-    min-width: 320px;
-    max-width: 320px;
-    min-height: 200px;
-    padding: 80px 67px;
+    width: 320px;
+    height: 200px;
     border: 1px solid #aac4eb;
     transition: all 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__img {
+      width: 250px;
+      height: 200px;
+      pointer-events: none;
+    }
 
     &:hover {
       border: 2x solid #1e2530;
