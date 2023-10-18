@@ -94,7 +94,7 @@ const Subcategory: FC<{ parent: number }> = ({ parent }) => {
               {categories?.filter((item: ICategory) => item.parent === subcategory.id_category)
                 .length !== 0 && (
                 <RxTriangleRight
-                  className={classNames({
+                  className={classNames(styles.category__arrow, {
                     [styles.rotated]: subcategory.id_category === openedCategory,
                   })}
                 />
