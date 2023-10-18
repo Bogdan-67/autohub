@@ -10,14 +10,6 @@ class GoodController {
       next(e);
     }
   }
-  async getBrands(req, res, next) {
-    try {
-      const brands = await goodService.getBrands(req.query);
-      res.status(200).json(brands);
-    } catch (e) {
-      next(e);
-    }
-  }
   async getFilters(req, res, next) {
     try {
       const filters = await goodService.getFilters(req.query);

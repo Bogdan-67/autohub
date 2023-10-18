@@ -5,7 +5,6 @@ const checkRole = require('../middlewares/check-role-middleware');
 
 router.post('/goods', checkRole('ADMIN'), GoodController.createGood);
 router.get('/goods', GoodController.getGoods);
-router.get('/brands', GoodController.getBrands);
 router.get('/filters', GoodController.getFilters);
 router.get('/goods/:id', GoodController.getOneGood);
 router.put('/goods/:id', checkRole('ADMIN'), GoodController.updateGood);

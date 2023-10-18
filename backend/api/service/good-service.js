@@ -31,19 +31,6 @@ class GoodService {
       return goods.rows;
     }
   }
-  async getBrands({ category_id }) {
-    const brandsFromDb = await db.query(`SELECT * FROM brands`);
-    if (category_id) {
-      const goods = await this.getGoodsByCategory(category_id);
-      let brands = [];
-      for (let i in goods.rows) {
-        const good = goods.rows[i];
-        if (!brands.find((brand) => brand.id_brand === good.brand_id))
-          brands.push(brandsFromDb.find((brand) => brand.id_brand === good.brand_id));
-      }
-      return brands;
-    } else return brandsFromDb.rows;
-  }
   async getFilters({ category_id }) {
     const goods = await this.getGoodsByCategory(category_id);
     const filters = new Object();
