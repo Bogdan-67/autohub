@@ -35,6 +35,22 @@ const CategoriesSelectBar: FC<Props> = ({
     dispatch(fetchCategories());
   }, []);
 
+  useEffect(() => {
+    if (categoryId === null || categoryId === 0) {
+      setParentCategory({ label: null, value: null });
+    } else {
+      if (categories) {
+        const category = categories.find((category) => category.id_category === categoryId);
+        if (category) {
+          setParentCategory({
+            label: category.name,
+            value: category.id_category,
+          });
+        }
+      }
+    }
+  }, [categoryId]);
+
   const handleSelect = (option: Option) => {
     setParentCategory(option);
     setCategoryId(option && option.value ? option.value : null);
