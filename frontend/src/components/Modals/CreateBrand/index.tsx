@@ -110,9 +110,12 @@ const CreateBrandModal = (props: Props) => {
             Изображение{' '}
             {imageUrl && (
               <Button
+                className={styles.form__img__remove}
+                title='Удалить фото'
                 onClick={() => {
                   setValue('logo', null);
                   setImageUrl(null);
+                  fileInputRef.current.value = '';
                 }}>
                 <AiOutlineMinus />
               </Button>
@@ -121,7 +124,6 @@ const CreateBrandModal = (props: Props) => {
           <Controller
             name='logo'
             control={control}
-            defaultValue=''
             render={({ field }) => (
               <input
                 ref={fileInputRef}
