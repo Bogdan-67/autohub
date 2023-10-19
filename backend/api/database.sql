@@ -34,7 +34,7 @@ CREATE TABLE brands(
     id_brand SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     logo VARCHAR(255) NOT NULL,
-    description VARCHAR(255) NOT NULL
+    description TEXT
 );
 
 CREATE TABLE categories(
