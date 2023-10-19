@@ -1,15 +1,14 @@
 const db = require('../db');
 const fs = require('fs');
 const path = require('path');
-const uuid = require('uuid');
-const sharp = require('sharp');
 const ApiError = require('../exceptions/api-error');
+const GoodService = require('./good-service');
 
 class BrandService {
   async getBrands({ category_id }) {
     const brandsFromDb = await db.query(`SELECT * FROM brands`);
     if (category_id) {
-      const goods = await this.getGoodsByCategory(category_id);
+      const goods = await GoodService.getGoodsByCategory(category_id);
       let brands = [];
       for (let i in goods.rows) {
         const good = goods.rows[i];
@@ -19,7 +18,7 @@ class BrandService {
       return brands;
     } else return brandsFromDb.rows;
   }
-  async createBrand({ name, description, logo }) {
+  async createBrand(name, description, logo) {
     if (!name) {
       throw ApiError.BadRequest('Название не может быть пустым!');
     }
