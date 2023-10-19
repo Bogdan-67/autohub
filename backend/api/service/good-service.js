@@ -7,17 +7,50 @@ const ApiError = require('../exceptions/api-error');
 
 class GoodService {
   async getGoods({ category_id, filters }) {
-    filters = filters.split(';');
-    if (!filters || filters.length === 0) {
-      return this.getGoodsByCategory(category_id);
-    } else {
-      const placeholders = filters.map((_, index) => `$${index + 1}`).join(', ');
-      const goods = await db.query(
-        `SELECT DISTINCT * FROM goods RIGHT JOIN good_categories ON good_categories.good_id=goods.id_good INNER JOIN good_features ON goods.id_good = good_features.good_id WHERE id_feature IN (${placeholders}) AND category_id = $${placeholders.length}`,
-        [...filters, category_id],
-      );
-      return goods.rows;
+    let filterValues = [];
+    let filterQuery = '';
+    if (filters) {
+      filterValues = filters.split(';');
+      if (filterValues.length > 0) {
+        filterQuery =
+          'id_feature IN (' + filterValues.map((_, index) => `$${index + 1}`).join(', ') + ')';
+      }
     }
+
+    let categoryCondition = '';
+    if (category_id) {
+      categoryCondition = 'category_id = $' + (filterValues.length + 1);
+    }
+
+    const where =
+      filterQuery || categoryCondition
+        ? `WHERE ${filterQuery} ${
+            filterQuery && categoryCondition ? 'AND' : ''
+          } ${categoryCondition}`
+        : '';
+
+    const sql = `
+    WITH Photos AS (
+      SELECT good_id, ARRAY_AGG(filename) AS photos
+      FROM good_images
+      GROUP BY good_id
+    )
+    SELECT DISTINCT ON (id_good) id_good, good_name, article, brand_id, price, storage, p.photos FROM goods g
+    RIGHT JOIN good_categories gc ON gc.good_id = g.id_good
+    LEFT JOIN brands ON brands.id_brand = g.brand_id 
+    INNER JOIN good_features gf ON g.id_good = gf.good_id 
+    LEFT JOIN Photos p ON p.good_id = g.id_good
+    ${where}
+  `;
+
+    const queryValues = [...filterValues];
+    if (category_id) {
+      queryValues.push(category_id);
+    }
+
+    const goods = await db.query(sql, queryValues);
+
+    return goods.rows;
   }
   async getGoodsByCategory(category_id) {
     if (!category_id) {
