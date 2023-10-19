@@ -1,4 +1,8 @@
 const BrandService = require('../service/brands-service');
+const fs = require('fs');
+const path = require('path');
+const uuid = require('uuid');
+const sharp = require('sharp');
 
 class BrandsController {
   async getBrands(req, res, next) {
@@ -12,13 +16,14 @@ class BrandsController {
   async createBrand(req, res, next) {
     try {
       const { logo } = req.files;
+      const { name, description } = req.body;
       if (!logo) {
         throw ApiError.BadRequest('Не загружено изображение!');
       }
       const maxSize = 10 * 1024 * 1024; // Максимальный размер файла в байтах (10 МБ)
       let fileName = uuid.v4() + '.jpg';
 
-      const directoryPath = path.resolve(__dirname, '..', 'static/brands', String(good_id));
+      const directoryPath = path.resolve(__dirname, '..', 'static/brands');
 
       if (!fs.existsSync(directoryPath)) {
         fs.mkdirSync(directoryPath, { recursive: true });
@@ -47,7 +52,7 @@ class BrandsController {
           console.log('Изображение успешно сохранено');
         });
       }
-      const brand = await BrandService.createBrand(req.body);
+      const brand = await BrandService.createBrand(name, description, fileName);
       res.status(200).json(brand);
     } catch (e) {
       next(e);
