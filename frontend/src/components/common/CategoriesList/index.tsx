@@ -17,9 +17,11 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { BsPencil, BsPlus, BsTrash } from 'react-icons/bs';
 import Button from '../Button';
 
-type Props = {};
+type Props = {
+  admin?: boolean;
+};
 
-const Category: FC<ICategory> = ({ id_category, name, parent }) => {
+const Category: FC<ICategory & Props> = ({ id_category, name, parent, admin = false }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const category = useSelector(SelectCategory);
   const categories = useAppSelector(SelectCategoriesList);
@@ -43,7 +45,7 @@ const Category: FC<ICategory> = ({ id_category, name, parent }) => {
           />
         )}
         <p className={styles.category__title}>{name}</p>
-        {category === id_category && (
+        {category === id_category && admin && (
           <div className={styles.category__buttons}>
             <Button
               title='Создать дочернюю категорию'
@@ -68,7 +70,7 @@ const Category: FC<ICategory> = ({ id_category, name, parent }) => {
   );
 };
 
-const Subcategory: FC<{ parent: number }> = ({ parent }) => {
+const Subcategory: FC<{ parent: number } & Props> = ({ parent, admin }) => {
   const [openedCategory, setOpenedCategory] = useState<number>(null);
   const category = useSelector(SelectCategory);
   const categories = useAppSelector(SelectCategoriesList);
@@ -100,7 +102,7 @@ const Subcategory: FC<{ parent: number }> = ({ parent }) => {
                 />
               )}
               <p className={styles.subcategory__title}>{subcategory.name}</p>
-              {category === subcategory.id_category && (
+              {category === subcategory.id_category && admin && (
                 <div className={styles.subcategory__buttons}>
                   <Button
                     title='Создать дочернюю категорию'
@@ -130,7 +132,7 @@ const Subcategory: FC<{ parent: number }> = ({ parent }) => {
   );
 };
 
-const CategoriesList = (props: Props) => {
+const CategoriesList = ({ admin = false }: Props) => {
   const categories = useAppSelector(SelectCategoriesList);
   const dispatch = useAppDispatch();
   const { status, error } = useAppSelector(SelectCategories);
@@ -139,29 +141,43 @@ const CategoriesList = (props: Props) => {
     dispatch(fetchCategories());
   }, []);
 
+  console.log('admin', admin);
+
   return (
     <>
       {status === Status.LOADING ? (
-        <div className={styles.noCategories}>
-          <LoadingSpinner color='#000' size={40} />
+        <div
+          className={classNames(styles.noCategories, {
+            [styles.noCategories_admin]: admin,
+          })}>
+          <LoadingSpinner color='#000' size={admin ? 40 : 30} />
         </div>
       ) : status === Status.ERROR ? (
-        <div className={styles.noCategories}>
+        <div
+          className={classNames(styles.noCategories, {
+            [styles.noCategories_admin]: admin,
+          })}>
           <p>
             {error} {':('}
           </p>
         </div>
       ) : !categories || categories.length === 0 ? (
-        <div className={styles.noCategories}>
+        <div
+          className={classNames(styles.noCategories, {
+            [styles.noCategories_admin]: admin,
+          })}>
           <p>Пока еще не создано ни одной категории</p>
         </div>
       ) : (
         <>
-          <ul className={styles.categories__list}>
+          <ul
+            className={classNames(styles.categories__list, {
+              [styles.categories__list_admin]: admin,
+            })}>
             {categories
               ?.filter((category: ICategory) => category.parent === null)
               .map((category: ICategory, index) => (
-                <Category key={index} {...category} />
+                <Category key={index} admin={admin} {...category} />
               ))}
           </ul>
         </>

@@ -49,7 +49,7 @@ const CategoriesAdmin = (props: Props) => {
   return (
     <>
       <h1 className='admin-title'>Категории товаров</h1>
-      <CategoriesList />
+      <CategoriesList admin />
       <Button className={styles.createBtn} onClick={() => setIsCreateOpen(true)}>
         Создать
       </Button>

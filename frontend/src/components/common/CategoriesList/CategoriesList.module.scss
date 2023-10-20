@@ -116,8 +116,11 @@
     align-items: start;
     flex: 1 1 auto;
     width: 80%;
-    padding: 40px 50px;
-    border: $thin-border;
+
+    &_admin {
+      padding: 40px 50px;
+      border: $thin-border;
+    }
   }
 }
 
@@ -127,11 +130,15 @@
   justify-content: center;
   align-items: center;
   flex: 1 1 auto;
-  border: $thin-border;
   width: 80%;
   font-size: 20px;
   font-weight: 700;
-  padding: 50px;
+  padding: 10px;
+
+  &_admin {
+    border: $thin-border;
+    padding: 50px;
+  }
 
   * {
     opacity: 0.3;

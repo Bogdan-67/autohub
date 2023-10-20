@@ -14,7 +14,7 @@ interface CategoriesState {
 }
 
 const initialState: CategoriesState = {
-  list: null,
+  list: [],
   status: Status.SUCCESS,
   error: null,
 };
