@@ -20,6 +20,7 @@ interface FilterState {
     min: number;
     max: number;
   };
+  features: number[];
   sort: SortType;
   view: string;
 }
@@ -31,6 +32,7 @@ const initialState: FilterState = {
     min: 0,
     max: 1000,
   },
+  features: [],
   sort: {
     name: 'по алфавиту (А-Я)',
     sortProperty: SortPropertyEnum.TITLE_ASC,
@@ -81,6 +83,7 @@ const filterSlice = createSlice({
   },
 });
 
+export const SelectFilters = (state: RootState) => state.filters;
 export const SelectSort = (state: RootState) => state.filters.sort;
 export const SelectView = (state: RootState) => state.filters.view;
 export const SelectPrices = (state: RootState) => state.filters.prices;
