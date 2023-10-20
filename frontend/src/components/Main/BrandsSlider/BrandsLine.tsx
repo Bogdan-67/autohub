@@ -1,17 +1,23 @@
-import React, { Suspense, useState } from 'react';
+import React, { FC, Suspense, useEffect, useState } from 'react';
 import styles from './BrandsSlider.module.scss';
 import { LiaAngleLeftSolid, LiaAngleRightSolid } from 'react-icons/lia';
 import Slider from 'react-slick';
-import brands from './brands.json';
+import brandsjson from './brands.json';
 import { Link } from 'react-router-dom';
+import { API_URL } from '../../../http';
+import { IBrand } from '../../../models/IBrand';
 
-const BrandsLine = ({ rtl }) => {
+type Props = {
+  rtl: boolean;
+  brands: IBrand[];
+};
+
+const BrandsLine: FC<Props> = ({ rtl, brands }) => {
   const sliderSettings = {
     slidesToShow: 5,
     responsive: [
-      { breakpoint: 768, settings: { slidesToShow: 1 } },
-      { breakpoint: 1024, settings: { slidesToShow: 5 } },
-      { breakpoint: 1000, settings: { slidesToShow: 6 } },
+      { breakpoint: 1300, settings: { slidesToShow: 3 } },
+      { breakpoint: 1620, settings: { slidesToShow: 4 } },
     ],
     slidesToScroll: 1,
     infinite: true,
@@ -28,12 +34,12 @@ const BrandsLine = ({ rtl }) => {
     <div className={styles.carousel}>
       <Slider {...sliderSettings}>
         {brands.map((brand, index) => (
-          <Link to={'/brands/' + brand.link} key={index}>
+          <Link to={'/brands/' + brand.id_brand} key={index}>
             <div className={styles.carousel__slide}>
               <div
                 className={styles.carousel__slide__img}
                 style={{
-                  background: `url("${brand.img}")`,
+                  background: `url("${API_URL}/brands/${brand.logo}")`,
                   backgroundRepeat: 'no-repeat',
                   backgroundPosition: 'center center',
                   backgroundSize: 'contain',
