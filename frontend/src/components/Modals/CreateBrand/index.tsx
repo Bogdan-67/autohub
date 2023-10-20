@@ -59,6 +59,7 @@ const CreateBrandModal = (props: Props) => {
       .then((_) => {
         reset();
         setIsOpen(false);
+        setImageUrl(null);
       })
       .catch((e) => {
         setIsError(e.response?.data.message ? e.response.data.message : 'Произошла ошибка');
