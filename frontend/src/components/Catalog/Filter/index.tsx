@@ -8,32 +8,28 @@ import { SelectCategory, clearFilter } from '../../../redux/slices/filterSlice';
 import Price from './Price';
 import { useAppSelector } from '../../../hooks/redux';
 import FilterService from '../../../services/FIlterService';
-import { SelectItem } from './SelectFilter/SelectFilter.props';
 import SelectFilter from './SelectFilter';
+import { fetchGoods } from '../../../redux/slices/goodSlice';
 
 const Filter: React.FC = () => {
   const category = useAppSelector(SelectCategory);
   const dispatch = useAppDispatch();
-  const [categoryFilters, setCategoryFilters] = useState<{ [key: string]: SelectItem[] }>(null);
+  const [categoryFilters, setCategoryFilters] = useState<{ [key: string]: string[] }>(null);
   const [selectedFeatures, setSelectedFeatures] = useState<{
-    [key: string]: number[];
+    [key: string]: string[];
   }>(null);
-
-  const SelectItemInNumber = (data: SelectItem[]) => {
-    return data.map((item: SelectItem) => item.id);
-  };
 
   const getFiltersByCategory = async (category: number) => {
     await FilterService.fetchFilters(category).then((response) => {
       const data = response.data;
       setCategoryFilters(data);
-      const featuresIds: { [key: string]: number[] } = {};
+      const features: { [key: string]: string[] } = {};
       for (const key in data) {
         if (data.hasOwnProperty(key)) {
-          featuresIds[key] = SelectItemInNumber(data[key]);
+          features[key] = [];
         }
       }
-      setSelectedFeatures(featuresIds);
+      setSelectedFeatures(features);
       console.log(data);
     });
   };
@@ -45,13 +41,9 @@ const Filter: React.FC = () => {
   }, [category]);
 
   useEffect(() => {
-    let filters = new Array();
-    for (let key in selectedFeatures) {
-      if (selectedFeatures[key] && selectedFeatures[key].length > 0)
-        filters = [...filters, ...selectedFeatures[key]];
-      else filters = [...filters, ...SelectItemInNumber(categoryFilters[key])];
-    }
-  }, [selectedFeatures]);
+    console.log(selectedFeatures);
+    dispatch(fetchGoods({ categoryId: category, filters: selectedFeatures }));
+  }, [category, selectedFeatures]);
 
   return (
     <section className={styles.filter}>
@@ -78,23 +70,23 @@ const Filter: React.FC = () => {
               title={filterName}
               items={filterData}
               selectedItems={selectedFeatures[filterName]}
-              addItem={(id) => {
+              addItem={(selected) => {
                 let features = selectedFeatures;
-                if (features.length) {
-                  features[filterName].push(id);
-                  setSelectedFeatures(features);
+                if (features[filterName]) {
+                  features[filterName].push(selected);
+                  setSelectedFeatures({ ...features });
                 }
               }}
-              removeItem={(id) => {
+              removeItem={(selected) => {
                 let features = selectedFeatures;
-                const indexOf = features[filterName].findIndex((item) => item === id);
+                const indexOf = features[filterName].findIndex((item) => item === selected);
                 features[filterName].splice(indexOf, 1);
-                setSelectedFeatures(features);
+                setSelectedFeatures({ ...features });
               }}
               clearItems={() => {
                 let features = selectedFeatures;
                 features[filterName] = [];
-                setSelectedFeatures(features);
+                setSelectedFeatures({ ...features });
               }}
             />
           );
@@ -102,4 +94,5 @@ const Filter: React.FC = () => {
     </section>
   );
 };
+
 export default Filter;

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styles from './SelectFilter.module.scss';
 import classNames from 'classnames';
 import FilterBlock from '../FilterBlock';
-import { SelectFilterProps, SelectItem } from './SelectFilter.props';
+import { SelectFilterProps } from './SelectFilter.props';
 
 const SelectFilter: FC<SelectFilterProps> = ({
   title,
@@ -12,29 +12,29 @@ const SelectFilter: FC<SelectFilterProps> = ({
   removeItem,
   clearItems,
 }) => {
-  const handleClick = (item: SelectItem) => {
-    if (selectedItems.includes(item.id)) {
-      removeItem(item.id);
+  const handleClick = (item: string) => {
+    if (selectedItems.includes(item)) {
+      removeItem(item);
     } else {
-      addItem(item.id);
+      addItem(item);
     }
   };
 
   return (
     <FilterBlock clearFunc={() => clearItems()} title={title} isSelected={!!selectedItems.length}>
       <ul className={styles.brands__list}>
-        {items.map((item) => (
+        {items.map((item, index) => (
           <li
-            key={item.id}
+            key={index}
             className={classNames(styles.brand, {
-              [styles.active]: selectedItems.includes(item.id),
+              [styles.active]: selectedItems.includes(item),
             })}
             onClick={() => handleClick(item)}>
             <span
               className={classNames(styles.checkbox, {
-                [styles.checkbox_checked]: selectedItems.includes(item.id),
+                [styles.checkbox_checked]: selectedItems.includes(item),
               })}></span>
-            {item.title}
+            {item}
           </li>
         ))}
       </ul>
