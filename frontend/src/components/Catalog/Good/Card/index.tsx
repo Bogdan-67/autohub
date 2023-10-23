@@ -6,13 +6,11 @@ import { API_URL } from '../../../../http';
 const GoodCard: FC<IGood> = ({ photos, good_name, id_good, price }) => {
   return (
     <div className={styles.card}>
-      <img
-        className={styles.card__img}
-        src={`${API_URL}/good-photos/${id_good}/${photos[0]}`}
-        alt={'Photo'}
-      />
-      <h4 className={styles.card__good_name}>{good_name}</h4>
-      <p className={styles.card__price}>{price} ₽</p>
+      <div className={styles.card__img}>
+        <img src={`${API_URL}/good-photos/${id_good}/${photos[0]}`} alt={'Photo'} />
+      </div>
+      <h4 className={styles.card__title}>{good_name}</h4>
+      {price && <p className={styles.card__price}>{price.toLocaleString('ru-RU')} ₽</p>}
     </div>
   );
 };
