@@ -53,7 +53,11 @@ const Filter: React.FC = () => {
         <button
           className={styles.filter__header__refresh}
           title='Сбросить фильтры'
-          onClick={() => dispatch(clearFilter())}>
+          onClick={() => {
+            dispatch(clearFilter());
+            setCategoryFilters(null);
+            setSelectedFeatures(null);
+          }}>
           <img src={refresh} alt='refresh' />
         </button>
       </div>
