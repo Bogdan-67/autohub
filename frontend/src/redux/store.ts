@@ -4,12 +4,14 @@ import filters from './slices/filterSlice';
 import auth from './slices/authSlice';
 import categories from './slices/categoriesSlice';
 import goodReducer from './slices/goodSlice';
+import brands from './slices/brandsSlice';
 
 export const store = configureStore({
   reducer: {
     filters,
     auth,
     categories,
+    brands,
     goodReducer,
   },
 });
