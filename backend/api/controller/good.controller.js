@@ -20,6 +20,14 @@ class GoodController {
       next(e);
     }
   }
+  async getFeatures(req, res, next) {
+    try {
+      const features = await goodService.getFeatures(req.query);
+      res.status(200).json(features);
+    } catch (e) {
+      next(e);
+    }
+  }
   async createGood(req, res, next) {
     try {
       console.log(req.body, req.files);

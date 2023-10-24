@@ -118,6 +118,13 @@ class GoodService {
     console.log('filters', filters);
     return filters;
   }
+
+  async getFeatures() {
+    const features = await db.query(`SELECT DISTINCT title FROM good_features`);
+    const titlesArr = features.rows.map((obj) => obj.title);
+    return titlesArr;
+  }
+
   async createGood(
     { good_name, article, price, storage, description, category_id },
     features,
