@@ -3,7 +3,7 @@ import Input from '../../../../components/common/BorderInput';
 import styles from './CreateGood.module.scss';
 import EditInput from '../../../../components/common/EditInput';
 import { IGood } from '../../../../models/IGood';
-import Button from '../../../../components/common/Button';
+import BorderButton from '../../../../components/common/Button';
 import { BsPlusLg, BsXLg } from 'react-icons/bs';
 import classNames from 'classnames';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
@@ -12,6 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import schema from '../../../../models/validation/CreateGoodSchema';
 import GoodService from '../../../../services/GoodService';
 import WarnIcon from '../../../../components/common/WarnIcon';
+import BrandsSelectBar from '../../../../components/common/BrandsSelectBar';
 
 const CreateGood = (props) => {
   const {
@@ -227,6 +228,23 @@ const CreateGood = (props) => {
           )}
         />
 
+        <Controller
+          name='brand_id'
+          control={control}
+          defaultValue={null}
+          render={({ field }) => (
+            <EditInput title='Бренд'>
+              <BrandsSelectBar
+                className={classNames(styles.inputs__categories, {
+                  [styles.inputs__categories_invalid]: !!errors.brand_id,
+                })}
+                brandId={field.value}
+                setBrandId={(id) => field.onChange(id)}
+              />
+            </EditInput>
+          )}
+        />
+
         <div className={styles.features}>
           <p className={styles.inputs__title}>Характеристики</p>
           {features && features.length > 0 && (
@@ -273,24 +291,24 @@ const CreateGood = (props) => {
                       />
                     )}
                   />
-                  <Button
+                  <BorderButton
                     className='border-btn border-btn_warn'
                     type='button'
                     onClick={() => removeFeature(feature.id_feature)}>
                     Удалить
-                  </Button>
+                  </BorderButton>
                 </li>
               ))}
             </ul>
           )}
-          <Button
+          <BorderButton
             ref={addButtonRef}
             type='button'
             title='Добавить характеристику'
             className={classNames(styles.features__btn, styles.features__btn_add)}
             onClick={() => addFeature()}>
             <BsPlusLg />
-          </Button>
+          </BorderButton>
         </div>
         <div className={styles.images}>
           <p className={styles.inputs__title}>
@@ -313,24 +331,24 @@ const CreateGood = (props) => {
                       backgroundPosition: 'center',
                       backgroundRepeat: 'no-repeat',
                     }}></div>
-                  <Button
+                  <BorderButton
                     title='Удалить'
                     type='button'
                     onClick={() => deletePhoto(file)}
                     className={classNames('border-btn border-btn_warn', styles.images__cross)}>
                     <BsXLg />
-                  </Button>
+                  </BorderButton>
                 </div>
               ))}
             </div>
           )}
-          <Button
+          <BorderButton
             className={classNames(styles.features__btn, styles.features__btn_add)}
             title='Добавить изображение'
             type='button'
             onClick={handleAddImageClick}>
             <BsPlusLg />
-          </Button>
+          </BorderButton>
           <Controller
             name='photos'
             defaultValue={[]}
@@ -354,13 +372,13 @@ const CreateGood = (props) => {
         </div>
       </div>
       {isError && <div>{isError}</div>}
-      <Button
+      <BorderButton
         loading={isLoading}
         spinnerColor='#404040'
         className={classNames('border-btn border-btn_save', styles.form__saveBtn)}
         type='submit'>
         Создать
-      </Button>
+      </BorderButton>
     </form>
   );
 };

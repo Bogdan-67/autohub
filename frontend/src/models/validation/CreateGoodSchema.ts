@@ -21,6 +21,7 @@ const CreateGoodSchema = Yup.object()
       .required('Обязательное поле'),
     description: Yup.string(),
     category_id: Yup.number().required('Обязательное поле'),
+    brand_id: Yup.number().required('Обязательное поле'),
     features: Yup.array().of(featureSchema),
     photos: Yup.array().test('is-files', 'Должны быть файлами', (value) => {
       if (!value || value.length === 0) {

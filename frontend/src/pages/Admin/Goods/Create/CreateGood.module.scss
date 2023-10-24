@@ -53,7 +53,7 @@
 
     &_invalid {
       :global {
-        .__control {
+        .select__control {
           border-color: $not-valid-clr;
         }
       }
