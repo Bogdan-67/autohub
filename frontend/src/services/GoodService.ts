@@ -14,4 +14,8 @@ export default class GoodService {
       params: { category_id, filters: JSON.stringify(filters) },
     });
   }
+
+  static async getFeatures(): Promise<AxiosResponse<string[]>> {
+    return $api.get<string[]>('/features');
+  }
 }
