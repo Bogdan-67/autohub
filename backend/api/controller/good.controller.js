@@ -4,7 +4,9 @@ const db = require('../db');
 class GoodController {
   async getGoods(req, res, next) {
     try {
-      const goods = await goodService.getGoods(req.query);
+      let { category_id, filters } = req.query;
+      filters = JSON.parse(filters);
+      const goods = await goodService.getGoods({ category_id, filters });
       res.status(200).json(goods);
     } catch (e) {
       next(e);

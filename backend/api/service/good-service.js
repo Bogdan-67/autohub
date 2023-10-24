@@ -7,50 +7,83 @@ const ApiError = require('../exceptions/api-error');
 
 class GoodService {
   async getGoods({ category_id, filters }) {
-    let filterValues = [];
-    let filterQuery = '';
-    if (filters) {
-      filterValues = filters.split(';');
-      if (filterValues.length > 0) {
-        filterQuery =
-          'id_feature IN (' + filterValues.map((_, index) => `$${index + 1}`).join(', ') + ')';
-      }
+    // filters - объект { [key: string]: string[] }
+    if (
+      !filters ||
+      Object.keys(filters).length === 0 ||
+      Object.keys(filters).every((key) => filters[key].length === 0)
+    ) {
+      const sql = `
+      WITH Photos AS (
+        SELECT good_id, ARRAY_AGG(filename) AS photos
+        FROM good_images
+        GROUP BY good_id
+      )
+      SELECT DISTINCT ON (g.id_good) g.id_good, g.good_name, g.article, g.brand_id, g.price, g.storage, p.photos
+      FROM goods g
+      RIGHT JOIN good_categories gc ON gc.good_id = g.id_good
+      LEFT JOIN brands ON brands.id_brand = g.brand_id
+      INNER JOIN good_features gf ON g.id_good = gf.good_id
+      LEFT JOIN Photos p ON p.good_id = g.id_good
+      WHERE (
+        $1::int IS NULL OR gc.category_id = $1::int
+      );
+    `;
+
+      const goods = await db.query(sql, [category_id]);
+
+      return goods.rows;
+    } else {
+      const filterParams = filters
+        ? Object.entries(filters)
+            .filter(([title, descriptions]) => descriptions.length > 0)
+            .map(([title, descriptions]) => {
+              return {
+                title,
+                descriptions,
+              };
+            })
+        : [];
+
+      const sql = `
+      WITH Photos AS (
+        SELECT good_id, ARRAY_AGG(filename) AS photos
+        FROM good_images
+        GROUP BY good_id
+      ),
+      filtered_goods AS (
+        SELECT gf.good_id
+        FROM good_features gf
+        INNER JOIN unnest($1::text[]) f(title) ON gf.title = f.title
+        INNER JOIN unnest($2::text[]) d(description) ON gf.description = d.description
+        GROUP BY gf.good_id
+        HAVING COUNT(DISTINCT gf.title) = $3
+      )
+      SELECT DISTINCT ON (g.id_good) g.id_good, g.good_name, g.article, g.brand_id, g.price, g.storage, p.photos
+      FROM goods g
+      RIGHT JOIN good_categories gc ON gc.good_id = g.id_good
+      LEFT JOIN brands ON brands.id_brand = g.brand_id
+      INNER JOIN good_features gf ON g.id_good = gf.good_id
+      LEFT JOIN Photos p ON p.good_id = g.id_good
+      WHERE (
+        $4::int IS NULL OR gc.category_id = $4::int
+      ) AND g.id_good IN (SELECT good_id FROM filtered_goods);
+    `;
+
+      const filterDescriptionsArray =
+        filterParams.length > 0 ? filterParams.map((filter) => filter.descriptions).flat() : [];
+      const filterTitlesArray =
+        filterParams.length > 0 ? filterParams.map((filter) => filter.title) : [];
+      const countFilters = filterTitlesArray.length;
+
+      const goods = await db.query(sql, [
+        filterTitlesArray,
+        filterDescriptionsArray,
+        countFilters,
+        category_id,
+      ]);
+      return goods.rows;
     }
-
-    let categoryCondition = '';
-    if (category_id) {
-      categoryCondition = 'category_id = $' + (filterValues.length + 1);
-    }
-
-    const where =
-      filterQuery || categoryCondition
-        ? `WHERE ${filterQuery} ${
-            filterQuery && categoryCondition ? 'AND' : ''
-          } ${categoryCondition}`
-        : '';
-
-    const sql = `
-    WITH Photos AS (
-      SELECT good_id, ARRAY_AGG(filename) AS photos
-      FROM good_images
-      GROUP BY good_id
-    )
-    SELECT DISTINCT ON (id_good) id_good, good_name, article, brand_id, price, storage, p.photos FROM goods g
-    RIGHT JOIN good_categories gc ON gc.good_id = g.id_good
-    LEFT JOIN brands ON brands.id_brand = g.brand_id 
-    INNER JOIN good_features gf ON g.id_good = gf.good_id 
-    LEFT JOIN Photos p ON p.good_id = g.id_good
-    ${where}
-  `;
-
-    const queryValues = [...filterValues];
-    if (category_id) {
-      queryValues.push(category_id);
-    }
-
-    const goods = await db.query(sql, queryValues);
-
-    return goods.rows;
   }
   async getGoodsByCategory(category_id) {
     if (!category_id) {
@@ -67,20 +100,22 @@ class GoodService {
   async getFilters({ category_id }) {
     const goods = await this.getGoodsByCategory(category_id);
     const filters = new Object();
-    for (let i in goods.rows) {
-      const good_id = goods.rows[i].id_good;
-      const features = await db.query(`SELECT * FROM good_features WHERE good_id = $1`, [good_id]);
+    for (let i in goods) {
+      const good_id = goods[i].id_good;
+      const features = await db.query(`SELECT * FROM good_features WHERE good_id = $1`, [good_id]); // Получаю характеристики товара
+
       for (let featureIndex in features.rows) {
-        const feature = features.rows[featureIndex];
+        const feature = features.rows[featureIndex]; // Одна характеристика товара
         if (!filters[feature.title]) {
           filters[feature.title] = new Array();
-          filters[feature.title].push({ id: feature.id_feature, title: feature.description });
+          filters[feature.title].push(feature.description);
         } else {
-          if (!filters[feature.title].find((item) => item.id === feature.id))
-            filters[feature.title].push({ id: feature.id_feature, title: feature.description });
+          if (!filters[feature.title].includes(feature.description))
+            filters[feature.title].push(feature.description);
         }
       }
     }
+    console.log('filters', filters);
     return filters;
   }
   async createGood(
