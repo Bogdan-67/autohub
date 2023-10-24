@@ -13,6 +13,7 @@ import schema from '../../../../models/validation/CreateGoodSchema';
 import GoodService from '../../../../services/GoodService';
 import WarnIcon from '../../../../components/common/WarnIcon';
 import BrandsSelectBar from '../../../../components/common/BrandsSelectBar';
+import FeatureSelect from '../../../../components/common/FeatureSelect';
 
 const CreateGood = (props) => {
   const {
@@ -102,35 +103,35 @@ const CreateGood = (props) => {
   const submit: SubmitHandler<Partial<IGood>> = async (data) => {
     setIsLoading(true);
     console.log(data);
-    const formData = new FormData();
+    // const formData = new FormData();
 
-    for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        const value = data[key];
+    // for (const key in data) {
+    //   if (data.hasOwnProperty(key)) {
+    //     const value = data[key];
 
-        if (Array.isArray(value)) {
-          value.forEach((item, index) => {
-            if (item instanceof File) {
-              formData.append(`${key}[]`, item);
-            } else {
-              formData.append(`${key}[]`, JSON.stringify(item));
-            }
-          });
-        } else if (value instanceof File) {
-          formData.append(key, value);
-        } else {
-          formData.append(key, String(value));
-        }
-      }
-    }
-    await GoodService.createGood(formData)
-      .then((_) => {
-        reset();
-        setFeatures([]);
-        setIsError(null);
-      })
-      .catch((e) => setIsError(e.response ? e.response.data.message : 'Ошибка сервера'))
-      .finally(() => setIsLoading(false));
+    //     if (Array.isArray(value)) {
+    //       value.forEach((item, index) => {
+    //         if (item instanceof File) {
+    //           formData.append(`${key}[]`, item);
+    //         } else {
+    //           formData.append(`${key}[]`, JSON.stringify(item));
+    //         }
+    //       });
+    //     } else if (value instanceof File) {
+    //       formData.append(key, value);
+    //     } else {
+    //       formData.append(key, String(value));
+    //     }
+    //   }
+    // }
+    // await GoodService.createGood(formData)
+    //   .then((_) => {
+    //     reset();
+    //     setFeatures([]);
+    //     setIsError(null);
+    //   })
+    //   .catch((e) => setIsError(e.response ? e.response.data.message : 'Ошибка сервера'))
+    //   .finally(() => setIsLoading(false));
   };
 
   return (
@@ -256,17 +257,9 @@ const CreateGood = (props) => {
                     control={control}
                     defaultValue={feature.title || ''}
                     render={({ field }) => (
-                      <Input
-                        placeholder='Название'
-                        className={classNames('border-input', styles.features__input)}
-                        type='text'
-                        value={field.value}
-                        onChange={field.onChange}
-                        aria-invalid={
-                          errors.features && errors.features[index] && errors.features[index].title
-                            ? true
-                            : false
-                        }
+                      <FeatureSelect
+                        selectedFeature={field.value}
+                        setSelectedFeature={field.onChange}
                       />
                     )}
                   />
