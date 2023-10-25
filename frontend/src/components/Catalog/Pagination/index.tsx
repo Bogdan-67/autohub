@@ -5,6 +5,7 @@ import styles from './Pagination.module.scss';
 import classNames from 'classnames';
 
 export const Pagination = ({ page, pageCount, handlePageClick }) => {
+  // TODO: Сделать пагинацию товаров
   return (
     <>
       <ReactPaginate

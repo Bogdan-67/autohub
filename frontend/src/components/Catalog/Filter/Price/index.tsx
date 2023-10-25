@@ -15,7 +15,7 @@ import {
 const Price = () => {
   const prices = useSelector(SelectPrices);
   const dispatch = useAppDispatch();
-
+  // TODO: Сделать фильтрацию по цене
   return (
     <FilterBlock
       title={'Цена'}

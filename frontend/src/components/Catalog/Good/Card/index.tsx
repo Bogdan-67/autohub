@@ -8,6 +8,7 @@ const GoodCard: FC<IGood> = ({ photos, good_name, id_good, price }) => {
   return (
     <div className={styles.card}>
       <div className={styles.card__img}>
+        {/* TODO: Сделать слайдер фоток */}
         <img src={`${API_URL}/good-photos/${id_good}/${photos[0]}`} alt={'Photo'} />
       </div>
       <Link to={`/goods/${id_good}`}>

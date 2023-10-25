@@ -32,7 +32,7 @@ const Sort = () => {
   const ref = useRef();
 
   useOnClickOutside(ref, () => setIsOpen(false));
-
+  // TODO: Сделать сортировку
   return (
     <div className={styles.sort}>
       <label className={styles.sort__label}>Сортировка:</label>

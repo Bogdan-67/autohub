@@ -36,7 +36,7 @@ const FeatureSelect: React.FC<Props> = ({ selectedFeature, setSelectedFeature })
   useEffect(() => {
     fetchFeatures();
   }, []);
-
+  // TODO: Сделать поиск и стилизовать
   return (
     <Select
       style={{ width: 300 }}
