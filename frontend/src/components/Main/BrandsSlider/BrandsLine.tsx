@@ -2,7 +2,6 @@ import React, { FC, Suspense, useEffect, useState } from 'react';
 import styles from './BrandsSlider.module.scss';
 import { LiaAngleLeftSolid, LiaAngleRightSolid } from 'react-icons/lia';
 import Slider from 'react-slick';
-import brandsjson from './brands.json';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../../../http';
 import { IBrand } from '../../../models/IBrand';

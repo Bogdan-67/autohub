@@ -1,0 +1,60 @@
+@import '../../../scss/vars';
+
+.good {
+  padding: 60px 30px;
+
+  &__slider {
+    &__item {
+      text-align: center;
+    }
+  }
+
+  &__preview {
+    display: flex;
+    gap: 30px;
+  }
+
+  &__photos {
+    position: relative;
+    width: 50%;
+  }
+
+  &__announce {
+    width: 50%;
+  }
+
+  &__image {
+    width: 400px;
+  }
+
+  &__info {
+    width: 80%;
+    margin: auto;
+    margin-top: 50px;
+  }
+}
+
+.slickPrev,
+.slickNext {
+  position: absolute;
+  top: 50%;
+  background: transparent;
+  border: none;
+  z-index: 2;
+  font-size: 50px;
+  color: $text-clr;
+
+  &:hover {
+    transition: all 0.5s ease;
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+}
+
+.slickPrev {
+  left: 0;
+}
+
+.slickNext {
+  right: 0;
+}
