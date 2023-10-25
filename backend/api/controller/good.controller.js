@@ -45,7 +45,7 @@ class GoodController {
   }
   async getOneGood(req, res, next) {
     try {
-      const good = await goodService.getOneGood();
+      const good = await goodService.getOneGood(req.params);
       res.status(200).json(good);
     } catch (e) {
       next(e);

@@ -249,8 +249,39 @@ class GoodService {
     await db.query('COMMIT');
     return res;
   }
-  async getOneGood() {
-    return 0;
+  async getOneGood({ id }) {
+    const sql = `
+      WITH Photos AS (
+        SELECT good_id, ARRAY_AGG(filename) AS photos
+        FROM good_images
+        WHERE good_id = $1
+        GROUP BY good_id
+      ),
+      Features AS (
+        SELECT good_id, json_agg(json_build_object('title', title, 'description', description)) AS features
+        FROM good_features
+        WHERE good_id = $1
+        GROUP BY good_id
+      ),
+      Categories AS (
+        SELECT good_id, json_agg(json_build_object('id_category', c.id_category,'name', name, 'parent', parent)) AS categories
+        FROM good_categories gc
+        LEFT JOIN categories c ON c.id_category=gc.category_id
+        WHERE good_id = $1
+        GROUP BY good_id
+      )
+      SELECT g.id_good, g.good_name, g.article, g.brand_id, b.name AS brand_name, g.price, g.storage, p.photos, g.description, f.features, c.categories
+      FROM goods g
+      LEFT JOIN brands b ON b.id_brand = g.brand_id
+      LEFT JOIN Features f ON g.id_good = f.good_id
+      LEFT JOIN Photos p ON p.good_id = g.id_good
+      LEFT JOIN Categories c ON c.good_id = g.id_good
+      WHERE g.id_good = $1;
+    `;
+
+    const good = await db.query(sql, [id]);
+
+    return good.rows;
   }
   async editGood() {
     return 0;
