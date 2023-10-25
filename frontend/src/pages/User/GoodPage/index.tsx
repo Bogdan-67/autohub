@@ -20,7 +20,7 @@ const GoodPage = (props: Props) => {
   const [error, setError] = useState<string>(null);
   const [sliderRef, setSliderRef] = useState(null);
   const [showArrows, setShowArrows] = useState<boolean>(false);
-  const [features, setFeatures] = useState([]);
+  const [tabs, setTabs] = useState<TabsProps['items']>([]);
 
   const sliderSettings = {
     slidesToShow: 1,
@@ -38,13 +38,30 @@ const GoodPage = (props: Props) => {
       .then((response) => {
         setGood(response.data);
         console.log(response.data);
-        setFeatures(
-          response.data.features.map((feature, index) => ({
-            key: index,
-            label: feature.title,
-            children: <p>{feature.description}</p>,
-          })),
-        );
+
+        const featuresOptions = response.data.features.map((feature, index) => ({
+          key: index,
+          label: feature.title,
+          children: <p>{feature.description}</p>,
+        }));
+
+        setTabs([
+          {
+            key: '1',
+            label: 'Описание',
+            children: <p>{response.data.description}</p>,
+          },
+          {
+            key: '2',
+            label: 'Характеристики',
+            children: <Descriptions bordered items={featuresOptions} />,
+          },
+          {
+            key: '3',
+            label: 'Отзывы',
+            children: 'Отзывы',
+          },
+        ]);
       })
       .catch((e) => {
         setError(e.response ? e.response.data.message : e.message);
@@ -55,24 +72,6 @@ const GoodPage = (props: Props) => {
   useEffect(() => {
     fetchGood();
   }, []);
-
-  const items: TabsProps['items'] = [
-    {
-      key: '1',
-      label: 'Описание',
-      children: <p>{good.description}</p>,
-    },
-    {
-      key: '2',
-      label: 'Характеристики',
-      children: <Descriptions title='Характеристики' bordered items={features} />,
-    },
-    {
-      key: '3',
-      label: 'Отзывы',
-      children: 'Отзывы',
-    },
-  ];
 
   return (
     <>
@@ -134,7 +133,7 @@ const GoodPage = (props: Props) => {
             </div>
           </div>
           <div className={styles.good__info}>
-            <Tabs defaultActiveKey='1' items={items} />
+            {tabs.length > 0 && <Tabs defaultActiveKey='1' items={tabs} />}
           </div>
         </div>
       )}
