@@ -1,3 +1,4 @@
+import { ICategory } from './ICategory';
 import { IFeature } from './IFeature';
 
 export interface IGood {
@@ -6,9 +7,11 @@ export interface IGood {
   article: string;
   category_id: number;
   brand_id: number;
+  brand_name?: string;
   price: number;
   photos: string[] | File[];
   description: string;
   storage: number;
   features?: Partial<IFeature>[];
+  categories?: Partial<ICategory>[];
 }
