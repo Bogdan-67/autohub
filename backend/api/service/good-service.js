@@ -281,7 +281,7 @@ class GoodService {
 
     const good = await db.query(sql, [id]);
 
-    return good.rows;
+    return good.rows[0];
   }
   async editGood() {
     return 0;
