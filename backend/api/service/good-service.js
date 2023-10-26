@@ -273,13 +273,20 @@ class GoodService {
         LEFT JOIN categories c ON c.id_category=gc.category_id
         WHERE good_id = $1
         GROUP BY good_id
+      ),
+      Reviews AS (
+        SELECT good_id, COUNT(id_review) AS reviews_count
+        FROM good_reviews
+        WHERE good_id = $1
+        GROUP BY good_id
       )
-      SELECT g.id_good, g.good_name, g.article, g.brand_id, b.name AS brand_name, g.price, g.storage, p.photos, g.description, g.rating, f.features, c.categories
+      SELECT g.id_good, g.good_name, g.article, g.brand_id, b.name AS brand_name, g.price, g.storage, p.photos, g.description, g.rating, f.features, c.categories, r.reviews_count
       FROM goods g
       LEFT JOIN brands b ON b.id_brand = g.brand_id
       LEFT JOIN Features f ON g.id_good = f.good_id
       LEFT JOIN Photos p ON p.good_id = g.id_good
       LEFT JOIN Categories c ON c.good_id = g.id_good
+      LEFT JOIN Reviews r ON r.good_id = g.id_good
       WHERE g.id_good = $1;
     `;
 

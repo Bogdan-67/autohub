@@ -13,6 +13,7 @@ export interface IGood {
   description: string;
   storage: number;
   rating: number;
+  reviews_count: number;
   features?: Partial<IFeature>[];
   categories?: Partial<ICategory>[];
 }
