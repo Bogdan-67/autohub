@@ -1,0 +1,16 @@
+.review {
+  &__title {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  &__car {
+    opacity: 0.5;
+    font-size: 12px;
+  }
+
+  &__date {
+    font-weight: 500;
+  }
+}

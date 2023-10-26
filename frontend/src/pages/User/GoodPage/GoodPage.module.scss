@@ -19,6 +19,30 @@
     width: 50%;
   }
 
+  &__rating {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__rating__reviews,
+  &__features {
+    font-weight: 500;
+    opacity: 0.7;
+
+    &:hover {
+      transition: all 0.2s ease;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  &__features {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 60px;
+  }
+
   &__announce {
     width: 50%;
     display: flex;
@@ -27,6 +51,7 @@
 
     &__brand {
       opacity: 0.6;
+      text-transform: uppercase;
     }
 
     &__title {
@@ -46,7 +71,14 @@
 
     &__cartBtn {
       margin-top: 30px;
-      width: 250px;
+      width: 220px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      &__icon {
+        font-size: 20px;
+      }
     }
   }
 

@@ -4,6 +4,7 @@ import { AxiosResponse } from 'axios';
 import { Status } from '../../models/Status.enum';
 import { IReview } from '../../models/IReview';
 import ReviewService from '../../services/ReviewService';
+import { message } from 'antd';
 
 interface ReviewState {
   list: IReview[];
@@ -55,6 +56,7 @@ const reviewSlice = createSlice({
     });
     builder.addCase(fetchReviews.rejected, (state, action) => {
       state.status = Status.ERROR;
+      message.error(action.payload);
       state.error = action.payload;
     });
   },

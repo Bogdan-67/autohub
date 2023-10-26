@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router';
 import GoodService from '../../../services/GoodService';
 import { IGood } from '../../../models/IGood';
 import styles from './GoodPage.module.scss';
 import LoadingSpinner from '../../../components/common/LoadingSpinner/LoadingSpinner';
-import { Tabs, Result, Image, Descriptions } from 'antd';
+import { Tabs, Result, Image, Descriptions, Rate } from 'antd';
 import { API_URL } from '../../../http';
 import Slider from 'react-slick';
 import '../../../scss/goodPhotosSlider.scss';
 import { LiaAngleLeftSolid, LiaAngleRightSolid } from 'react-icons/lia';
 import type { TabsProps } from 'antd';
 import Button from '../../../components/common/Button';
+import ReviewsList from '../../../components/ReviewsList';
+import { AiOutlineShoppingCart, AiOutlineTag } from 'react-icons/ai';
 
 type Props = {};
 
@@ -22,6 +24,14 @@ const GoodPage = (props: Props) => {
   const [sliderRef, setSliderRef] = useState(null);
   const [showArrows, setShowArrows] = useState<boolean>(false);
   const [tabs, setTabs] = useState<TabsProps['items']>([]);
+  const [activeTab, setActiveTab] = useState('1');
+  const infoRef = useRef<HTMLDivElement>(null);
+
+  const scrollToInfo = () => {
+    if (infoRef.current) {
+      infoRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const sliderSettings = {
     slidesToShow: 1,
@@ -60,7 +70,7 @@ const GoodPage = (props: Props) => {
           {
             key: '3',
             label: 'Отзывы',
-            children: 'Отзывы',
+            children: <ReviewsList good_id={response.data.id_good} />,
           },
         ]);
       })
@@ -73,6 +83,20 @@ const GoodPage = (props: Props) => {
   useEffect(() => {
     fetchGood();
   }, []);
+
+  const formatReviewsCount = (count: number) => {
+    if (count === 0) {
+      return 'нет отзывов';
+    }
+
+    if (count % 10 === 1 && count % 100 !== 11) {
+      return `${count} отзыв`;
+    } else if (count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20)) {
+      return `${count} отзыва`;
+    } else {
+      return `${count} отзывов`;
+    }
+  };
 
   return (
     <>
@@ -130,18 +154,49 @@ const GoodPage = (props: Props) => {
               <h2 className={styles.good__announce__brand}>{good.brand_name}</h2>
               <h1 className={styles.good__announce__title}>{good.good_name}</h1>
               <span className={styles.good__announce__article}>Арт. {good.article}</span>
+              <div className={styles.good__rating}>
+                <Rate disabled defaultValue={good.rating} />
+
+                <span
+                  className={styles.good__rating__reviews}
+                  onClick={() => {
+                    setActiveTab('3');
+                    scrollToInfo();
+                  }}>
+                  {good.reviews_count ? formatReviewsCount(good.reviews_count) : 'нет отзывов'}
+                </span>
+                <span
+                  className={styles.good__features}
+                  onClick={() => {
+                    setActiveTab('2');
+                    scrollToInfo();
+                  }}>
+                  <AiOutlineTag />
+                  Характеристики
+                </span>
+              </div>
               {good.price && (
                 <>
                   <p className={styles.good__announce__price}>
                     {good.price.toLocaleString('ru-RU')} ₽
                   </p>
-                  <Button className={styles.good__announce__cartBtn}>Добавить в корзину</Button>
+                  <Button className={styles.good__announce__cartBtn}>
+                    <AiOutlineShoppingCart className={styles.good__announce__cartBtn__icon} />{' '}
+                    Добавить в корзину
+                  </Button>
                 </>
               )}
             </div>
           </div>
-          <div className={styles.good__info}>
-            {tabs.length > 0 && <Tabs defaultActiveKey='1' items={tabs} />}
+          <div className={styles.good__info} ref={infoRef}>
+            {tabs.length > 0 && (
+              <Tabs
+                activeKey={activeTab}
+                onChange={(activeKey) => setActiveTab(activeKey)}
+                defaultActiveKey='1'
+                items={tabs}
+              />
+            )}
           </div>
         </div>
       )}
