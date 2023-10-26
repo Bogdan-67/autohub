@@ -14,6 +14,7 @@ import GoodService from '../../../../services/GoodService';
 import WarnIcon from '../../../../components/common/WarnIcon';
 import BrandsSelectBar from '../../../../components/common/BrandsSelectBar';
 import FeatureSelect from '../../../../components/common/FeatureSelect';
+import { message } from 'antd';
 
 const CreateGood = (props) => {
   const {
@@ -103,35 +104,40 @@ const CreateGood = (props) => {
   const submit: SubmitHandler<Partial<IGood>> = async (data) => {
     setIsLoading(true);
     console.log(data);
-    // const formData = new FormData();
+    const formData = new FormData();
 
-    // for (const key in data) {
-    //   if (data.hasOwnProperty(key)) {
-    //     const value = data[key];
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        const value = data[key];
 
-    //     if (Array.isArray(value)) {
-    //       value.forEach((item, index) => {
-    //         if (item instanceof File) {
-    //           formData.append(`${key}[]`, item);
-    //         } else {
-    //           formData.append(`${key}[]`, JSON.stringify(item));
-    //         }
-    //       });
-    //     } else if (value instanceof File) {
-    //       formData.append(key, value);
-    //     } else {
-    //       formData.append(key, String(value));
-    //     }
-    //   }
-    // }
-    // await GoodService.createGood(formData)
-    //   .then((_) => {
-    //     reset();
-    //     setFeatures([]);
-    //     setIsError(null);
-    //   })
-    //   .catch((e) => setIsError(e.response ? e.response.data.message : 'Ошибка сервера'))
-    //   .finally(() => setIsLoading(false));
+        if (Array.isArray(value)) {
+          value.forEach((item, index) => {
+            if (item instanceof File) {
+              formData.append(`${key}[]`, item);
+            } else {
+              formData.append(`${key}[]`, JSON.stringify(item));
+            }
+          });
+        } else if (value instanceof File) {
+          formData.append(key, value);
+        } else {
+          formData.append(key, String(value));
+        }
+      }
+    }
+
+    await GoodService.createGood(formData)
+      .then((_) => {
+        reset();
+        message.success('Товар успешно сохранен');
+        setFeatures([]);
+        setIsError(null);
+      })
+      .catch((e) => {
+        message.error(e.response ? e.response.data.message : e.message);
+        setIsError(e.response ? e.response.data.message : 'Ошибка сервера');
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
