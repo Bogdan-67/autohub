@@ -10,6 +10,7 @@ import Slider from 'react-slick';
 import '../../../scss/goodPhotosSlider.scss';
 import { LiaAngleLeftSolid, LiaAngleRightSolid } from 'react-icons/lia';
 import type { TabsProps } from 'antd';
+import Button from '../../../components/common/Button';
 
 type Props = {};
 
@@ -126,10 +127,17 @@ const GoodPage = (props: Props) => {
               )}
             </div>
             <div className={styles.good__announce}>
-              <h2>{good.brand_name}</h2>
+              <h2 className={styles.good__announce__brand}>{good.brand_name}</h2>
               <h1 className={styles.good__announce__title}>{good.good_name}</h1>
-              <span>Арт. {good.article}</span>
-              {good.price && <p>{good.price.toLocaleString('ru-RU')} ₽</p>}
+              <span className={styles.good__announce__article}>Арт. {good.article}</span>
+              {good.price && (
+                <>
+                  <p className={styles.good__announce__price}>
+                    {good.price.toLocaleString('ru-RU')} ₽
+                  </p>
+                  <Button className={styles.good__announce__cartBtn}>Добавить в корзину</Button>
+                </>
+              )}
             </div>
           </div>
           <div className={styles.good__info}>
