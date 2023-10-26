@@ -1,9 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { ICategory } from '../../models/ICategory';
 import { AxiosResponse } from 'axios';
-import { AuthResponse } from '../../models/response/AuthResponse';
-import CategoriesService from '../../services/CategoriesService';
 import { Status } from '../../models/Status.enum';
 import { ErrorResponse } from '../../models/response/ErrorResponse';
 import { IBrand } from '../../models/IBrand';
