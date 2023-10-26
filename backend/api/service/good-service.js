@@ -126,7 +126,7 @@ class GoodService {
   }
 
   async createGood(
-    { good_name, article, price, storage, description, category_id },
+    { good_name, article, price, storage, description, category_id, brand_id },
     features,
     photos,
   ) {
@@ -145,11 +145,14 @@ class GoodService {
     if (!category_id) {
       throw ApiError.BadRequest();
     }
+    if (!brand_id) {
+      throw ApiError.BadRequest();
+    }
 
     await db.query('BEGIN');
     const good = await db.query(
-      `INSERT INTO goods(good_name, article, price, storage, description) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-      [good_name, article, price, storage, description],
+      `INSERT INTO goods(good_name, article, price, storage, description, brand_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+      [good_name, article, price, storage, description, brand_id],
     );
 
     const goodFromDb = await db.query(`SELECT * FROM goods WHERE id_good = $1`, [
