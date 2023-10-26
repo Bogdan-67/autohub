@@ -17,6 +17,13 @@ interface FetchReviewsProps {
   user_id?: number;
 }
 
+interface CreateReviewProps {
+  user_id: number;
+  good_id: number;
+  rate: number;
+  text: string;
+}
+
 const initialState: ReviewState = {
   list: [],
   status: Status.SUCCESS,
@@ -33,10 +40,21 @@ export const fetchReviews = createAsyncThunk<
     const response = await ReviewService.fetchReviews(good_id, user_id);
     return response;
   } catch (error) {
-    if (!error.response) {
-      throw error.message;
-    }
-    return rejectWithValue(error.response.data.message);
+    return rejectWithValue(error.response ? error.response.data.message : error.message);
+  }
+});
+
+export const createReview = createAsyncThunk<
+  AxiosResponse<IReview>,
+  CreateReviewProps,
+  { rejectValue: string }
+>('reviews/create', async (params, { rejectWithValue }) => {
+  try {
+    const { good_id, user_id, text, rate } = params;
+    const response = await ReviewService.createReview(good_id, user_id, text, rate);
+    return response;
+  } catch (error) {
+    return rejectWithValue(error.response ? error.response.data.message : error.message);
   }
 });
 
@@ -48,13 +66,26 @@ const reviewSlice = createSlice({
     // Запрос отзывов
     builder.addCase(fetchReviews.pending, (state, action) => {
       state.status = Status.LOADING;
-      state.list = initialState.list;
     });
     builder.addCase(fetchReviews.fulfilled, (state, action) => {
       state.status = Status.SUCCESS;
       state.list = action.payload.data;
     });
     builder.addCase(fetchReviews.rejected, (state, action) => {
+      state.status = Status.ERROR;
+      message.error(action.payload);
+      state.error = action.payload;
+    });
+    // Создание отзыва
+    builder.addCase(createReview.pending, (state, action) => {
+      state.status = Status.LOADING;
+    });
+    builder.addCase(createReview.fulfilled, (state, action) => {
+      state.status = Status.SUCCESS;
+      message.success('Отзыв отправлен');
+      state.list.push(action.payload.data);
+    });
+    builder.addCase(createReview.rejected, (state, action) => {
       state.status = Status.ERROR;
       message.error(action.payload);
       state.error = action.payload;
