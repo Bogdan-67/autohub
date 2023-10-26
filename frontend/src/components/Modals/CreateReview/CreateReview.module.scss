@@ -1,0 +1,33 @@
+@import '../../../scss/vars';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+
+  &__title {
+    text-align: center;
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &__title {
+      font-size: 17px;
+      color: #fff;
+      font-weight: 500;
+    }
+  }
+
+  &__error {
+    color: $warn-clr;
+  }
+
+  &__btn {
+    width: 200px;
+    margin: auto;
+  }
+}

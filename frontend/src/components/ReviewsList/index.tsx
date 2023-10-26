@@ -34,6 +34,7 @@ const ReviewsList = ({ good_id, user_id }: Props) => {
       ) : !list || list.length === 0 ? (
         <div>Нет отзывов</div>
       ) : (
+        // TODO: Сделать бесконечную подгрузку либо пагинацию
         <List
           grid={{ gutter: 16, column: 1 }}
           dataSource={list}
