@@ -1,4 +1,5 @@
 const db = require('../db');
+const ReviewDTO = require('../dtos/review-dto');
 const ApiError = require('../exceptions/api-error');
 
 class ReviewService {
@@ -31,6 +32,7 @@ class ReviewService {
       `INSERT INTO good_reviews(good_id, user_id, text, rate) VALUES ($1, $2, $3, $4) RETURNING *`,
       [good_id, user_id, text, rate],
     );
+    const user = await db.query(`SELECT * FROM users WHERE id_user = $1`, [user_id]);
     const rating = await db.query(
       `SELECT AVG(rate) as rating FROM good_reviews WHERE good_id = $1`,
       [good_id],
@@ -40,8 +42,10 @@ class ReviewService {
       goodRating,
       good_id,
     ]);
+
+    const reviewDto = new ReviewDTO({ ...review.rows[0], ...user.rows[0] });
     await db.query('COMMIT');
-    return review.rows[0];
+    return reviewDto;
   }
 
   async deleteReview({ id_review }) {
