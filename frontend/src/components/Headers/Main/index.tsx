@@ -14,7 +14,6 @@ const menuItems = [
   { id: 2, title: 'О нас', path: '/about' },
   { id: 3, title: 'Где купить', path: '/shops' },
   { id: 4, title: 'Бренды', path: '/brands' },
-  { id: 5, title: 'Контакты', path: '/contacts' },
 ];
 
 interface Props {}

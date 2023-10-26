@@ -8,7 +8,6 @@ import Profile from './pages/User/Profile/EditProfile';
 import Main from './pages/User/Main';
 import Catalog from './pages/User/Catalog';
 import Brands from './pages/User/Brands';
-import Contacts from './pages/User/Contacts';
 import About from './pages/User/About';
 import Projects from './pages/User/Projects';
 import Cart from './pages/User/Cart';
@@ -65,7 +64,6 @@ function App() {
           </Route>
           <Route path='about' element={<About />}></Route>
           <Route path='brands' element={<Brands />}></Route>
-          <Route path='contacts' element={<Contacts />}></Route>
           <Route path='projects' element={<Projects />}></Route>
           <Route
             path='profile'

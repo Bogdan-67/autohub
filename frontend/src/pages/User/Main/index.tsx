@@ -13,6 +13,11 @@ export const Main: React.FC = () => {
       <ProjectsSlider />
       <News />
       <VideosSlider />
+      <iframe
+        src='https://yandex.ru/map-widget/v1/?um=constructor%3Ae161cd993b0658583e22abbc725c7f7f2e8776e68412577e8305ad81d939c620&amp;source=constructor'
+        width='100%'
+        height='400'
+        frameBorder='0'></iframe>
     </>
   );
 };
