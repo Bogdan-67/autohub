@@ -11,6 +11,15 @@ body {
   flex-direction: column;
 }
 
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
+.ant-tabs-tab:hover .ant-tabs-tab-btn {
+  color: $dop-clr !important;
+}
+
+.ant-tabs-ink-bar {
+  border-bottom: 2px solid $dop-clr;
+}
+
 input,
 textarea {
   border-radius: $input-brad;
