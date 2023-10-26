@@ -19,7 +19,7 @@ class GoodService {
         FROM good_images
         GROUP BY good_id
       )
-      SELECT DISTINCT ON (g.id_good) g.id_good, g.good_name, g.article, g.brand_id, g.price, g.storage, p.photos
+      SELECT DISTINCT ON (g.id_good) g.id_good, g.good_name, g.article, g.brand_id, g.price, g.storage, g.rating, p.photos
       FROM goods g
       RIGHT JOIN good_categories gc ON gc.good_id = g.id_good
       LEFT JOIN brands ON brands.id_brand = g.brand_id
@@ -59,7 +59,7 @@ class GoodService {
         GROUP BY gf.good_id
         HAVING COUNT(DISTINCT gf.title) = $3
       )
-      SELECT DISTINCT ON (g.id_good) g.id_good, g.good_name, g.article, g.brand_id, g.price, g.storage, p.photos
+      SELECT DISTINCT ON (g.id_good) g.id_good, g.good_name, g.article, g.brand_id, g.price, g.storage, g.rating, p.photos
       FROM goods g
       RIGHT JOIN good_categories gc ON gc.good_id = g.id_good
       LEFT JOIN brands ON brands.id_brand = g.brand_id
@@ -252,6 +252,7 @@ class GoodService {
     await db.query('COMMIT');
     return res;
   }
+
   async getOneGood({ id }) {
     const sql = `
       WITH Photos AS (
@@ -273,7 +274,7 @@ class GoodService {
         WHERE good_id = $1
         GROUP BY good_id
       )
-      SELECT g.id_good, g.good_name, g.article, g.brand_id, b.name AS brand_name, g.price, g.storage, p.photos, g.description, f.features, c.categories
+      SELECT g.id_good, g.good_name, g.article, g.brand_id, b.name AS brand_name, g.price, g.storage, p.photos, g.description, g.rating, f.features, c.categories
       FROM goods g
       LEFT JOIN brands b ON b.id_brand = g.brand_id
       LEFT JOIN Features f ON g.id_good = f.good_id

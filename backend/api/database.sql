@@ -51,7 +51,8 @@ CREATE TABLE goods(
     FOREIGN KEY (brand_id) REFERENCES brands(id_brand) ON DELETE CASCADE,
     price REAL,
     description TEXT,
-    storage INTEGER NOT NULL DEFAULT 0
+    storage INTEGER NOT NULL DEFAULT 0,
+    rating REAL DEFAULT 0
 );
 
 CREATE TABLE good_features(
@@ -75,7 +76,17 @@ CREATE TABLE good_images(
     filename VARCHAR(255),
     good_id INTEGER NOT NULL,
     FOREIGN KEY (good_id) REFERENCES goods(id_good) ON DELETE CASCADE
-)
+);
+
+CREATE TABLE good_reviews(
+    id_review SERIAL PRIMARY KEY,
+    text TEXT,
+    rate INTEGER NOT NULL,
+    good_id INTEGER NOT NULL,
+    FOREIGN KEY (good_id) REFERENCES goods(id_good) ON DELETE CASCADE,
+    id_user INTEGER NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE
+);
 
 CREATE TABLE cart_goods(
     id_cart_goods SERIAL PRIMARY KEY,

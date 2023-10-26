@@ -12,6 +12,7 @@ export interface IGood {
   photos: string[] | File[];
   description: string;
   storage: number;
+  rating: number;
   features?: Partial<IFeature>[];
   categories?: Partial<ICategory>[];
 }
