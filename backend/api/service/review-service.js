@@ -5,7 +5,10 @@ class ReviewService {
   async getReviews({ good_id, user_id }) {
     const userCondition = user_id ? 'AND user_id = $2' : '';
     const goodCondition = good_id ? 'AND good_id = $1' : '';
-    const sql = `SELECT * FROM good_reviews WHERE TRUE ${goodCondition} ${userCondition}`;
+    const sql = `SELECT gr.id_review, gr.text, gr.rate, gr.good_id, gr.user_id, u.name, u.surname, u.car 
+    FROM good_reviews gr 
+    LEFT JOIN users u ON u.id_user = gr.user_id 
+    WHERE TRUE ${goodCondition} ${userCondition}`;
     const reviews = await db.query(sql, [good_id, user_id].filter(Boolean));
     return reviews.rows;
   }
