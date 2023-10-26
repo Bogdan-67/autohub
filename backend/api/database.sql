@@ -84,8 +84,8 @@ CREATE TABLE good_reviews(
     rate INTEGER NOT NULL,
     good_id INTEGER NOT NULL,
     FOREIGN KEY (good_id) REFERENCES goods(id_good) ON DELETE CASCADE,
-    id_user INTEGER NOT NULL,
-    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE
+    user_id INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id_user) ON DELETE CASCADE
 );
 
 CREATE TABLE cart_goods(
