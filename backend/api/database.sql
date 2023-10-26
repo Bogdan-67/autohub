@@ -82,6 +82,7 @@ CREATE TABLE good_reviews(
     id_review SERIAL PRIMARY KEY,
     text TEXT,
     rate INTEGER NOT NULL,
+    created_at DATE DEFAULT current_date,
     good_id INTEGER NOT NULL,
     FOREIGN KEY (good_id) REFERENCES goods(id_good) ON DELETE CASCADE,
     user_id INTEGER NOT NULL,

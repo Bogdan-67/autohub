@@ -4,4 +4,8 @@ export interface IReview {
   rate: number;
   good_id?: number;
   user_id: number;
+  name: string;
+  surname: string;
+  car?: string;
+  created_at: string;
 }
