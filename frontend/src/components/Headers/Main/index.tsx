@@ -10,9 +10,10 @@ import { useAppSelector } from '../../../hooks/redux';
 import { SelectIsAuth, SelectUser } from '../../../redux/slices/authSlice';
 
 const menuItems = [
+  // TODO:  Сделать страницу с услугамим
+  { id: 3, title: 'Услуги', path: '/services' },
   { id: 1, title: 'Проекты', path: '/projects' },
   { id: 2, title: 'О нас', path: '/about' },
-  { id: 3, title: 'Где купить', path: '/shops' },
   { id: 4, title: 'Бренды', path: '/brands' },
 ];
 
@@ -21,7 +22,6 @@ interface Props {}
 const MainHeader: FC<Props> = ({}) => {
   const location = useLocation();
   const item = 3;
-  const [isOpen, setIsOpen] = useState(false);
   const [isOpenAuth, setIsOpenAuth] = useState<boolean>(false);
   const [hasAccount, setHasAccount] = useState<boolean>(true);
   const isAuth = useAppSelector(SelectIsAuth);
@@ -39,7 +39,7 @@ const MainHeader: FC<Props> = ({}) => {
       <header className={styles.header}>
         <div className={styles.logo}>
           <Link to='/'>
-            <img className={styles.logo__img} src={logo} alt='Dealer-Center' />
+            <img className={styles.logo__img} src={logo} alt='AutoHub' />
           </Link>
         </div>
         <ul className={styles.menu}>
@@ -50,15 +50,8 @@ const MainHeader: FC<Props> = ({}) => {
                 styles.item,
                 location.pathname === '/catalog' ? styles.active : '',
               )}>
-              Каталог
+              Автозапчасти
             </NavLink>
-            {isOpen && (
-              <ul className={classNames(styles.menu_items, isOpen ? styles.open : '')}>
-                <li>Звуковое обородувание</li>
-                <li>Микрофоны</li>
-                <li>Свет</li>
-              </ul>
-            )}
           </li>
           {menuItems.map((item) => (
             <li key={item.id}>
