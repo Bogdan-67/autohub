@@ -56,7 +56,7 @@ const CreateReviewModal = ({ good_id, name }: Props) => {
           <Controller
             name='rate'
             control={control}
-            defaultValue={null}
+            defaultValue={5}
             render={({ field }) => (
               <label className={styles.form__label}>
                 <p className={styles.form__label__title}>Оценка</p>
