@@ -56,9 +56,9 @@ const Price = () => {
             style={{ border: 'none', boxShadow: 'none', padding: '15px 0px' }}
             label='false'
             ruler='false'
-            barLeftColor='#DE9179'
+            barLeftColor='#ff4747'
             barInnerColor='#171717'
-            barRightColor='#DE9179'
+            barRightColor='#ff4747'
             thumbLeftColor='#171717'
             thumbRightColor='#171717'></MultiRangeSlider>
         </div>

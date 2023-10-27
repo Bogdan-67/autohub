@@ -20,7 +20,7 @@ const AdminHeader: FC<Props> = ({}) => {
       <header className={styles.header}>
         <div className={styles.logo}>
           <Link to='/'>
-            <img src={logo} alt='Dealer-Center' />
+            <img className={styles.logo__img} src={logo} alt='Dealer-Center' />
           </Link>
         </div>
         <div className={styles.box}>

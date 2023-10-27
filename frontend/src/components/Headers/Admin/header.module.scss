@@ -12,6 +12,9 @@ header {
   color: $text-wh-clr;
   text-transform: uppercase;
   .logo {
+    &__img {
+      height: 60px;
+    }
   }
   .active {
     color: $dop-clr !important;
