@@ -76,7 +76,7 @@ const Footer: FC = () => {
       <div className={styles.footer__content}>
         <div>
           <Link to='/' className={styles.footer__logo}>
-            <img src={logo} alt='Dealer-Center' />
+            <img className={styles.footer__logo__img} src={logo} alt='Dealer-Center' />
           </Link>
           <div className={styles.footer__date}>© 2010 - {new Date().getFullYear()}</div>
         </div>

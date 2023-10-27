@@ -23,7 +23,9 @@
   }
 
   &__logo {
-    height: 60px;
+    &__img {
+      height: 60px;
+    }
   }
 
   &__date {
