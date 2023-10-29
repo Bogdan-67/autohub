@@ -134,5 +134,14 @@ CREATE TABLE main_slider(
     active BOOLEAN DEFAULT true
 );
 
+CREATE TABLE feedbacks(
+    id_feedback SERIAL PRIMARY KEY,
+    message TEXT,
+    contacts TEXT,
+    created_at DATE DEFAULT current_date,
+    user_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users(id_user) ON DELETE CASCADE
+)
+
 INSERT INTO roles(role_name) VALUES ('USER') RETURNING *;
 INSERT INTO roles(role_name) VALUES ('ADMIN') RETURNING *;
