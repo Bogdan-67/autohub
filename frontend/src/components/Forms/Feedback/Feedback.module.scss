@@ -1,0 +1,32 @@
+@import '../../../scss/vars';
+
+.form {
+  &__title {
+    text-align: center;
+    color: $text-clr;
+  }
+
+  &__box {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    &__item {
+      width: 49%;
+    }
+  }
+
+  &__message {
+    min-height: 118px !important;
+  }
+
+  &__btn {
+    margin-top: 20px;
+    width: 200px;
+  }
+
+  &__label {
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+}

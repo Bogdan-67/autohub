@@ -1,0 +1,50 @@
+@import '../../../scss/vars';
+
+.contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+
+  &__title {
+    font-size: 38px;
+    text-transform: uppercase;
+    color: $text-clr;
+  }
+
+  &__blocks {
+    display: flex;
+    gap: 50px;
+    padding: 30px 0;
+  }
+
+  &__feedback {
+    margin-bottom: 30px;
+    border: $thin-border;
+    width: 100%;
+    padding: 20px;
+  }
+}
+
+.block {
+  border: $thin-border;
+  padding: 20px;
+  width: 400px;
+
+  &__title {
+    color: $text-clr;
+  }
+
+  &__list {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &__item {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

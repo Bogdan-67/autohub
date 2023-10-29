@@ -13,6 +13,7 @@ const goodRouter = require('./routes/good.routes');
 const categoriesRouter = require('./routes/categories.routes');
 const brandsRouter = require('./routes/brands.routes');
 const reviewRouter = require('./routes/review.routes');
+const feedbackRouter = require('./routes/feedback.routes');
 const errorMiddleware = require('./middlewares/error-middleware');
 
 const PORT = process.env.PORT || 5000;
@@ -38,6 +39,7 @@ app.use('/', goodRouter);
 app.use('/', categoriesRouter);
 app.use('/', brandsRouter);
 app.use('/', reviewRouter);
+app.use('/', feedbackRouter);
 app.use(errorMiddleware);
 
 const start = async () => {
