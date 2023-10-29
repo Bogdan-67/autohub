@@ -1,0 +1,22 @@
+.feedbacks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+
+  p,
+  span {
+    color: #fff;
+  }
+
+  span {
+    font-weight: 500;
+  }
+}

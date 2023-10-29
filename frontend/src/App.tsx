@@ -26,6 +26,7 @@ import BrandsAdmin from './pages/Admin/Brands';
 import GoodPage from './pages/User/GoodPage';
 import Contacts from './pages/User/Contacts';
 import News from './components/Main/News';
+import FeedbacksAdmin from './pages/Admin/Users/Feedbacks';
 
 function App() {
   const location = useLocation();
@@ -55,6 +56,9 @@ function App() {
           <Route path='goods'>
             <Route path='' element={<GoodsAdmin />}></Route>
             <Route path='create' element={<CreateGood />}></Route>
+          </Route>
+          <Route path='users'>
+            <Route path='feedbacks' element={<FeedbacksAdmin />}></Route>
           </Route>
           <Route path='*' element={<NotFound link='/admin' />}></Route>
         </Route>
