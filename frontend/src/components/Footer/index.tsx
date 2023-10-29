@@ -8,12 +8,16 @@ const footerNav = [
     title: 'Компания',
     items: [
       {
-        text: 'Каталог',
+        text: 'Автозапчасти',
         link: '/catalog',
       },
       {
         text: 'Проекты',
         link: '/projects',
+      },
+      {
+        text: 'Новости',
+        link: '/news',
       },
       {
         text: 'Бренды',
@@ -37,8 +41,8 @@ const footerNav = [
         link: '/shipping',
       },
       {
-        text: 'Сервис',
-        link: '/service',
+        text: 'Услуги',
+        link: '/services',
       },
     ],
   },
@@ -46,24 +50,24 @@ const footerNav = [
     title: 'Контакты',
     items: [
       {
-        text: '+7 495 981 48 29',
-        link: 'tel:+74959814829',
+        text: '+7 495 846 48 29',
+        link: 'tel:+74958464829',
       },
       {
-        text: '8 800 333 68 29',
-        link: 'tel:88003336829',
+        text: '8 800 333 93 29',
+        link: 'tel:88003339329',
       },
       {
         text: 'Звонок по РФ бесплатный',
         link: '',
       },
       {
-        text: 'info@dealer-center.ru',
-        link: 'mailto:info@dealer-center.ru',
+        text: 'info@autohub.ru',
+        link: 'mailto:info@autohub.ru',
       },
       {
-        text: '125364, г. Москва, ул. Свободы, 50/3',
-        link: 'https://yandex.ru/maps/-/CDQIV4Zu',
+        text: '124498, г. Москва, г. Зеленоград, Савёлкинский проезд, 4к1',
+        link: 'https://yandex.ru/maps/-/CDaLj-2n',
       },
     ],
   },

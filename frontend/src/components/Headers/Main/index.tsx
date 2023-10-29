@@ -10,11 +10,12 @@ import { useAppSelector } from '../../../hooks/redux';
 import { SelectIsAuth, SelectUser } from '../../../redux/slices/authSlice';
 
 const menuItems = [
-  // TODO:  Сделать страницу с услугамим
+  // TODO:  Сделать страницу с услугами, новостями, брендами
   { id: 3, title: 'Услуги', path: '/services' },
+  { id: 4, title: 'Новости', path: '/news' },
   { id: 1, title: 'Проекты', path: '/projects' },
   { id: 2, title: 'О нас', path: '/about' },
-  { id: 4, title: 'Бренды', path: '/brands' },
+  { id: 5, title: 'Контакты', path: '/contacts' },
 ];
 
 interface Props {}
@@ -67,7 +68,7 @@ const MainHeader: FC<Props> = ({}) => {
           ))}
         </ul>
         <div className={styles.box}>
-          <div className={classNames(styles.search, styles.item, styles.box__item)}>Поиск</div>
+          {/* <div className={classNames(styles.search, styles.item, styles.box__item)}>Поиск</div> */}
           {!isAuth ? (
             <div className={classNames(styles.login, styles.item, styles.box__item)}>
               <a onClick={() => setIsOpenAuth(true)}>Войти</a>

@@ -24,7 +24,6 @@ const News = () => {
               <span className={styles.news__article__date}>{article.date}</span>
               <h4 className={styles.news__article__title}>{article.title}</h4>
               <p className={styles.news__article__text}>{article.text}</p>
-              <p className={styles.news__article__endword}>Приятного просмотра!</p>
               <Link to='/news' className={styles.news__article__button}>
                 Подробнее
               </Link>

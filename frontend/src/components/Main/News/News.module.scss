@@ -95,7 +95,10 @@
     }
 
     &__text {
-      height: 116px;
+      height: 180px;
+      max-height: 180px;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
 
     &:hover &__overlay {

@@ -7,6 +7,7 @@ import { IUser } from '../../models/IUser';
 import { API_URL } from '../../http';
 import UserService from '../../services/UserService';
 import { Status } from '../../models/Status.enum';
+import { message } from 'antd';
 
 export type LoginParams = {
   login: string;
@@ -42,11 +43,9 @@ const localAuth = (local: string) => {
 export const loginAccount = createAsyncThunk<AxiosResponse<AuthResponse>, LoginParams>(
   'user/loginStatus',
   async (params, { rejectWithValue }) => {
-    console.log('FUNCTION LOGIN');
     try {
       const { login, password } = params;
       const response = await AuthService.login(login, password);
-      console.log('login', response);
       return response;
     } catch (error) {
       if (!error.response) {
@@ -74,7 +73,6 @@ export const registrAccount = createAsyncThunk<AxiosResponse<AuthResponse>, Regi
         car,
         recaptcha,
       );
-      console.log('registration', response);
       return response;
     } catch (error) {
       if (!error.response) {
@@ -102,7 +100,6 @@ export const checkAuth = createAsyncThunk<AxiosResponse<AuthResponse>, void>(
       const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {
         withCredentials: true,
       });
-      console.log('RESPONSE', response);
       return response;
     } catch (error) {
       if (!error.response) {
@@ -137,7 +134,6 @@ export const updateUser = createAsyncThunk<
   try {
     const { id_user, userData } = params;
     const response = await UserService.updateUser(id_user, userData);
-    console.log('response', response);
     return response;
   } catch (error) {
     if (!error.response) {
@@ -192,13 +188,13 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     // Кейсы для логина
     builder.addCase(loginAccount.pending, (state) => {
-      console.log('LOADING');
       state.status = Status.LOADING;
       state.user = initialState.user;
     });
     builder.addCase(loginAccount.fulfilled, (state, action) => {
       state.user = action.payload.data.user;
       console.log('USer', state.user);
+      message.success(`Рады видеть снова, ${action.payload.data.user.name}!`);
       state.status = Status.SUCCESS;
       localStorage.setItem('token', action.payload.data.accessToken);
       localStorage.setItem('role', action.payload.data.user.role);
@@ -206,7 +202,6 @@ const authSlice = createSlice({
       localStorage.isAuth = true;
     });
     builder.addCase(loginAccount.rejected, (state, action) => {
-      console.log('REJECTED');
       alert(action.payload);
       state.status = Status.ERROR;
       state.user = initialState.user;
@@ -219,6 +214,7 @@ const authSlice = createSlice({
     });
     builder.addCase(registrAccount.fulfilled, (state, action) => {
       state.user = action.payload.data.user;
+      message.success(`Добро пожаловать, ${action.payload.data.user.name}!`);
       state.status = Status.SUCCESS;
       localStorage.setItem('token', action.payload.data.accessToken);
       localStorage.setItem('role', action.payload.data.user.role);
@@ -226,7 +222,6 @@ const authSlice = createSlice({
       localStorage.isAuth = true;
     });
     builder.addCase(registrAccount.rejected, (state, action) => {
-      console.log('REJECTED');
       alert(action.payload);
       state.status = Status.ERROR;
       state.user = initialState.user;
@@ -257,7 +252,6 @@ const authSlice = createSlice({
       state.updateUserStatus = Status.SUCCESS;
       state.user = action.payload.data;
       localStorage.setItem('role', action.payload.data.role);
-      console.log('Данные пользователя', action.payload.data.name, action.payload.data);
     });
 
     builder.addCase(updateUser.rejected, (state) => {
@@ -288,10 +282,8 @@ const authSlice = createSlice({
       state.status = Status.SUCCESS;
       state.user = action.payload.data;
       localStorage.setItem('role', action.payload.data.role);
-      console.log('login', action.payload.data.login);
     });
     builder.addCase(fetchUser.rejected, (state) => {
-      console.log('ERROR');
       state.status = Status.ERROR;
     });
   },

@@ -1,0 +1,19 @@
+@import '../../../scss/vars';
+
+.map {
+  padding: 58px 0 20px;
+  background: $main-clr;
+
+  &__title {
+    text-align: center;
+    font-size: 38px;
+    color: $text-wh-clr;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 40px;
+
+    span {
+      color: $dop-clr;
+    }
+  }
+}

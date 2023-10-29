@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './About.module.scss';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 const advantages: { title: string; description: string }[] = [
   {
@@ -43,8 +44,11 @@ export const About: React.FC = () => {
           Добро пожаловать в AutoHub!
         </h1>
         <p className={styles.about__text}>
-          AutoHub - это современный автосервис, предоставляющий высококачественное обслуживание и
-          ремонт автомобилей в Зеленограде. Наша миссия - обеспечить вам максимальный комфорт и
+          <Link className={styles.link} to={'/contacts'}>
+            AutoHub
+          </Link>{' '}
+          - это современный автосервис, предоставляющий высококачественное обслуживание и ремонт
+          автомобилей в Зеленограде. Наша миссия - обеспечить вам максимальный комфорт и
           безопасность на дорогах, обеспечив надежное и надежное обслуживание вашего автомобиля.{' '}
         </p>
         <p className={styles.about__title}>Что нас выделяет:</p>
@@ -57,7 +61,10 @@ export const About: React.FC = () => {
           ))}
         </ul>
         <p className={styles.about__text} style={{ marginTop: '30px' }}>
-          Мы стремимся стать вашим надежным партнером в уходе за вашим автомобилем. Посетите AutoHub
+          Мы стремимся стать вашим надежным партнером в уходе за вашим автомобилем. Посетите{' '}
+          <Link className={styles.link} to={'/contacts'}>
+            AutoHub
+          </Link>{' '}
           уже сегодня и убедитесь, что ваш автомобиль находится в надежных руках.
         </p>
       </div>

@@ -41,3 +41,12 @@
   width: 80%;
   margin: auto;
 }
+
+.link {
+  font-weight: 500;
+  color: rgb(0, 69, 172);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
